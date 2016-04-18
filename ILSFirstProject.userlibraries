@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<eclipse-userlibraries>
+  <library name="org.antlr:antlr4:4.5.3">
+    <archive path="/Users/yin/IdeaProjects/ILSFirstProject/lib/antlr4-4.5.3.jar" />
+  </library>
+  <library name="org.antlr:antlr4-runtime:4.5.3" />
+  <library name="org.ow2.sat4j:org.ow2.sat4j.core:2.3.5">
+    <archive path="/Users/yin/IdeaProjects/ILSFirstProject/lib/org.ow2.sat4j.core-2.3.5.jar" />
+  </library>
+</eclipse-userlibraries>
+

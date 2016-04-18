@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component inherit-compiler-output="true" inheritJdk="true">
+	<output-test url="file://$MODULE_DIR$/out/test/ILSFirstProject"/>
+	<exclude-output/>
+	<contentEntry url="file://$MODULE_DIR$"/>
+	<levels>
+		<level name="org.antlr:antlr4:4.5.3" value="project"/>
+		<level name="org.ow2.sat4j:org.ow2.sat4j.core:2.3.5" value="project"/>
+		<level name="org.antlr:antlr4-runtime:4.5.3" value="project"/>
+	</levels>
+</component>
