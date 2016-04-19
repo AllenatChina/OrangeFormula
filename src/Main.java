@@ -25,9 +25,8 @@ public class Main {
         try {
             formula = parseInput(input);
         } catch (Exception e) {
-            //TODO
             System.out.println("Invalid formula. Couldn't parse it.");
-//            e.printStackTrace();
+            e.printStackTrace();
         }
 
         if (formula != null) {

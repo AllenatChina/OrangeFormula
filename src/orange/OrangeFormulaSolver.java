@@ -10,7 +10,6 @@ import org.sat4j.specs.TimeoutException;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.List;
 import java.util.Map;
 
@@ -28,7 +27,7 @@ public class OrangeFormulaSolver {
         varMappings = formula.getMapToInt();
     }
 
-    public void solve() {
+    public boolean solve() {
 
         System.out.println("By mapping variables to integers,");
         System.out.println(formula.getMapToInt().toString());
@@ -52,18 +51,20 @@ public class OrangeFormulaSolver {
 
         try {
 
-            solveDIMACS();
+            return solveDIMACS();
 
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ParseFormatException e) {
             e.printStackTrace();
         } catch (ContradictionException e) {
-            e.printStackTrace();
+            System.out.println("$ The cnf is unsatisfiable.");
+//            e.printStackTrace();
         } catch (TimeoutException e) {
             e.printStackTrace();
         }
 
+        return false;
     }
 
     private void writeDIMACS() throws IOException {
@@ -92,7 +93,7 @@ public class OrangeFormulaSolver {
 
     }
 
-    private void solveDIMACS() throws IOException, ParseFormatException, ContradictionException, TimeoutException {
+    private boolean solveDIMACS() throws IOException, ParseFormatException, ContradictionException, TimeoutException {
 
         LecteurDimacs solver = new LecteurDimacs(SolverFactory.newDefault());
         ISolver problem = (ISolver) solver.parseInstance("dimacs.cnf");
@@ -104,13 +105,15 @@ public class OrangeFormulaSolver {
 
             printSolutions(sol);
 
-            PrintWriter writer = new PrintWriter(System.out);
-            problem.printStat(writer);
-            writer.close();
+//            PrintWriter writer = new PrintWriter(System.out);
+//            problem.printStat(writer);
+//            writer.close();
 
+            return true;
 
         } else {
             System.out.println("$ The cnf is unsatisfiable.");
+            return false;
         }
     }
 

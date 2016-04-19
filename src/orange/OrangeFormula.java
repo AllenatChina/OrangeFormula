@@ -11,17 +11,16 @@ public class OrangeFormula {
      * If this formula is a multiple clause, this is where the clauses will be stored
      * Otherwise this is an empty list
      */
-    private Set<OrangeFormula> clauses;
+    private Set<OrangeClause> clauses;
 
     /**
      * If this formula is a single clause, this is where the literals will be stored
      * Otherwise this is an empty list
      */
-    private Set<String> literals;
+//    private Set<String> literals;
 
     public OrangeFormula() {
-        clauses = new HashSet<OrangeFormula>();
-        literals = new HashSet<String>();
+        clauses = new HashSet<OrangeClause>();
     }
 
     /**
@@ -30,113 +29,56 @@ public class OrangeFormula {
      */
     public OrangeFormula(String... literals) {
         this();
-        OrangeFormula inside = new OrangeFormula();
-        inside.addLiterals(new LinkedList<String>(Arrays.asList(literals)));
-        clauses.add(inside);
+        addClause(new OrangeClause(literals));
     }
 
-    /**
-     * check if this formula is a single clause
-     * @return
-     */
-    public boolean isSingleClause() {
-        return clauses.size() == 0;
-    }
 
     public boolean containsEmptyClause() {
-        if (isSingleClause()) {
-            return false;
-        } else {
-            for (OrangeFormula clause : clauses) {
-                if (clause.isEmptyClause()) {
-                    return true;
-                }
+        for (OrangeClause clause : clauses) {
+            if (clause.isEmptyClause()) {
+                return true;
             }
         }
         return false;
     }
 
     public boolean isEmptyFormula() {
-        return clauses.size() == 0 && literals.size() == 0;
+        return clauses.isEmpty();
     }
 
-    public boolean isEmptyClause() {
-        if (isSingleClause())
-            return literals.isEmpty();
-        else
-            return false;
-    }
-
-    public boolean isUnitClause() {
-        if (isSingleClause()) {
-            return literals.size() == 1;
-        } else {
-            return false;
-        }
-    }
-
-    public void addLiteral(String added) {
-        if (added.contains("False")) {
-            added = "False";
-        }
-        literals.add(added);
-    }
-
-    public void addLiterals(List<String> added) {
-        ListIterator<String> iterator = added.listIterator();
+    public boolean addClauses(List<OrangeClause> added) {
+        ListIterator<OrangeClause> iterator = added.listIterator();
         while (iterator.hasNext()) {
-            String cur = iterator.next();
-            if (cur.contains("False")) {
+            OrangeClause cur = iterator.next();
+            if (cur.containsLiteral("True")) {
                 iterator.remove();
             }
         }
-        literals.addAll(added);
+        return clauses.addAll(added);
     }
 
-    public void addClauses(List<OrangeFormula> added) {
-        clauses.addAll(added);
-    }
-
-    public void addClause(OrangeFormula added) {
-        clauses.add(added);
-    }
-
-    public List<String> getLiterals() {
-        return new ArrayList<String>(literals);
-    }
-
-    public Set<String> getLiteralsSet() {
-        return literals;
-    }
-
-    public List<OrangeFormula> getClauses() {
-        if (isSingleClause()) {
-            return Collections.singletonList(this);
-        } else {
-            return new ArrayList<OrangeFormula>(clauses);
+    public boolean addClause(OrangeClause added) {
+        if (added.containsLiteral("True")) {
+            return false;
         }
+        return clauses.add(added);
     }
 
-    public List<List<String>> getStringClauses() {
-        List<OrangeFormula> clauses = getClauses();
-        List<List<String>> stringClauses = new ArrayList<List<String>>();
+    public boolean removeClause(OrangeClause removed) {
+        return clauses.remove(removed);
+    }
 
-        for (int i = 0; i < clauses.size(); i++) {
-            stringClauses.add(clauses.get(i).getLiterals());
-        }
+    public Set<OrangeClause> getClauses() {
+        return clauses;
+    }
 
-        return stringClauses;
+    public List<OrangeClause> getClauseList() {
+        return new LinkedList<OrangeClause>(clauses);
     }
 
     public OrangeFormula groundVar(String var, String val) {
-        if (isSingleClause()) {
-            for (String literal : literals) {
-                literal = literal.replace(var, val);
-            }
-        } else {
-            for (OrangeFormula clause : clauses) {
-                clause.groundVar(var, val);
-            }
+        for (OrangeClause clause : clauses) {
+            clause.groundVar(var, val);
         }
 
         return this;
@@ -146,9 +88,9 @@ public class OrangeFormula {
         Map<String, Integer> mapping = new HashMap<String, Integer>();
 
         int n = 1;
-        List<OrangeFormula> clauses = getClauses();
-        for (OrangeFormula clause : clauses) {
-            List<String> literals = clause.getLiterals();
+        List<OrangeClause> clauses = getClauseList();
+        for (OrangeClause clause : clauses) {
+            List<String> literals = clause.getLiteralList();
             for (int i = 0; i < literals.size(); i++) {
                 String literal = literals.get(i);
                 if (literal.startsWith("~")) {
@@ -173,8 +115,8 @@ public class OrangeFormula {
 
         Map<String, Integer> mapping = getMapToInt();
 
-        for (OrangeFormula clause : getClauses()) {
-            List<String> literals = clause.getLiterals();
+        for (OrangeClause clause : getClauses()) {
+            List<String> literals = clause.getLiteralList();
             int[] temp = new int[literals.size()];
             for (int i = 0; i < literals.size(); i++) {
                 String literal = literals.get(i);
@@ -194,21 +136,12 @@ public class OrangeFormula {
     public String toString() {
         StringBuffer buffer = new StringBuffer();
 
-        if (isSingleClause()) {
-            List<String> literals = getLiterals();
-            buffer.append("[");
-            for (int i = 0; i < literals.size(); i++) {
-                buffer.append(literals.get(i) + (i == literals.size() - 1 ? "" : ", "));
-            }
-            buffer.append("]\n");
-        } else {
-            List<OrangeFormula> clauses = getClauses();
-            buffer.append("< ");
-            for (int i = 0; i < clauses.size(); i++) {
-                buffer.append(clauses.get(i).toString() + (i == clauses.size() - 1 ? "" : ", "));
-            }
-            buffer.append(" >");
+        List<OrangeClause> clauses = getClauseList();
+        buffer.append("< ");
+        for (int i = 0; i < clauses.size(); i++) {
+            buffer.append(clauses.get(i).toString() + (i == clauses.size() - 1 ? "" : ", "));
         }
+        buffer.append(" >");
 
         return buffer.toString();
     }
@@ -221,20 +154,7 @@ public class OrangeFormula {
 
         OrangeFormula formula = (OrangeFormula) obj;
 
-        if (formula.isSingleClause()) {
-            if (isSingleClause()) {
-                return getLiteralsSet().equals(formula.getLiteralsSet());
-            } else {
-                return false;
-            }
-        } else {
-            if (isSingleClause()) {
-                return false;
-            } else {
-                Set<OrangeFormula> a = new HashSet<OrangeFormula>(formula.getClauses());
-                return a.equals(clauses);
-            }
-        }
+        return clauses.equals(((OrangeFormula) obj).getClauses());
     }
 
     @Override
