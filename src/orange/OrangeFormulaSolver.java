@@ -6,10 +6,12 @@ import org.sat4j.reader.ParseFormatException;
 import org.sat4j.specs.ContradictionException;
 import org.sat4j.specs.ISolver;
 import org.sat4j.specs.TimeoutException;
+import org.sat4j.tools.ModelIterator;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -21,10 +23,12 @@ public class OrangeFormulaSolver {
     private OrangeFormula formula;
 
     private Map<String, Integer> varMappings;
+    private Map<String, Integer> solMappings;
 
     public OrangeFormulaSolver(OrangeFormula formula) {
         this.formula = formula;
         varMappings = formula.getMapToInt();
+        solMappings = new HashMap<String, Integer>();
     }
 
     public boolean solve() {
@@ -61,7 +65,7 @@ public class OrangeFormulaSolver {
             System.out.println("$ The cnf is unsatisfiable.");
 //            e.printStackTrace();
         } catch (TimeoutException e) {
-            e.printStackTrace();
+            System.out.println("$ The solver is unable to solve the cnf in two minutes. TIMEOUT!");
         }
 
         return false;
@@ -95,19 +99,22 @@ public class OrangeFormulaSolver {
 
     private boolean solveDIMACS() throws IOException, ParseFormatException, ContradictionException, TimeoutException {
 
-        LecteurDimacs solver = new LecteurDimacs(SolverFactory.newDefault());
-        ISolver problem = (ISolver) solver.parseInstance("dimacs.cnf");
+        LecteurDimacs reader = new LecteurDimacs(SolverFactory.newDefault());
+        ISolver solver = (ISolver) reader.parseInstance("dimacs.cnf");
+        ModelIterator mi = new ModelIterator(solver);
+        mi.setTimeout(120);
 
-        if (problem.isSatisfiable()) {
+        if (mi.isSatisfiable()) {
             System.out.println("$ The cnf is satisfiable:\n");
 
-            int[] sol = problem.model();
+            int[] sol = mi.model();
 
             printSolutions(sol);
 
 //            PrintWriter writer = new PrintWriter(System.out);
-//            problem.printStat(writer);
+//            solver.printStat(writer);
 //            writer.close();
+            printOtherSolutions(mi);
 
             return true;
 
@@ -120,11 +127,24 @@ public class OrangeFormulaSolver {
     private void printSolutions(int[] sol) {
 
         for (String s : varMappings.keySet()) {
-            varMappings.put(s, sol[varMappings.get(s) - 1] > 0 ? 1 : 0);
+            solMappings.put(s, sol[varMappings.get(s) - 1] > 0 ? 1 : 0);
         }
 
         System.out.println("$ One of model is: \n");
-        System.out.println(varMappings.toString() + "\n");
+        System.out.println(solMappings.toString() + "\n");
+    }
+
+    private void printOtherSolutions(ModelIterator solver) throws TimeoutException {
+        System.out.println("$ Other models are: \n");
+        long n = solver.numberOfModelsFoundSoFar();
+        while (solver.isSatisfiable()) {
+            int[] sol = solver.model();
+            for (String s : varMappings.keySet()) {
+                solMappings.put(s, sol[varMappings.get(s) - 1] > 0 ? 1 : 0);
+            }
+
+            System.out.println(solMappings.toString() + "\n");
+        }
     }
 
 

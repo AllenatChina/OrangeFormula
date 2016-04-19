@@ -8,11 +8,13 @@ import java.util.*;
 public class OrangeFormulaOptimiser {
 
     public static OrangeFormula optimise(OrangeFormula formula) {
-        //TODO: optimise the formula, and return it
 
         subsumption(formula);
 
         unitPropagation(formula);
+
+        //TODO: so far pure literals are just detected, not removed, in case of causing optimised formula to be unsatisfiable
+        pureLiterals(formula);
 
         return formula;
     }
@@ -86,13 +88,29 @@ public class OrangeFormulaOptimiser {
                 }
             }
         }
-
-        System.out.println("Unit propagation: " + units.toString().replace("[", "").replace("]", ""));
+        if (!units.isEmpty()) {
+            System.out.println("Unit propagation: " + units.toString().replace("[", "").replace("]", ""));
+        }
         return formula;
     }
 
     private static void pureLiterals(OrangeFormula formula) {
 
+        Set<String> allLiterals = new HashSet<String>();
+        for (OrangeClause clause : formula.getClauses()) {
+            allLiterals.addAll(clause.getLiterals());
+        }
+        Set<String> pureLiterals = new HashSet<String>();
+        for (String literal : allLiterals) {
+            String negated = getNegatedLiteral(literal);
+            if (pureLiterals.contains(negated)) {
+
+            }else if (!allLiterals.contains(negated)) {
+                pureLiterals.add(literal);
+            }
+        }
+
+        System.out.println("Pure literals: " + pureLiterals.toString().replace("[", "").replace("]", ""));
     }
 
     private static String getNegatedLiteral(String literal) {
