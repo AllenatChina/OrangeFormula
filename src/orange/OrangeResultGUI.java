@@ -1,5 +1,11 @@
 package orange;
 
+import formula.FormulaLexer;
+import formula.FormulaParser;
+import org.antlr.v4.runtime.ANTLRInputStream;
+import org.antlr.v4.runtime.CommonTokenStream;
+import org.antlr.v4.runtime.RuleContext;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -12,16 +18,18 @@ import java.io.PrintStream;
 
 public class OrangeResultGUI extends JDialog{
     private JPanel contentPane;
-    private JButton buttonOK;
+    private JButton buttonCancel;
     private JTextArea output;
+    private JLabel processLabel;
+    private JButton buttonStop;
 
     public OrangeResultGUI() {
         setTitle("Result");
         setContentPane(contentPane);
         setModal(true);
-        getRootPane().setDefaultButton(buttonOK);
+        getRootPane().setDefaultButton(buttonCancel);
 
-        buttonOK.addActionListener(new ActionListener() {
+        buttonCancel.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 onOK();
             }
@@ -31,6 +39,22 @@ public class OrangeResultGUI extends JDialog{
         addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
                 onOK();
+            }
+        });
+
+        buttonStop.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (work != null) {
+                    if (work.getState() == Thread.State.TERMINATED) {
+                        printProcess("Already stopped!");
+                    }else {
+                        work.stop();
+                        printProcess("Stopped!");
+                        result = "STOPPED";
+                    }
+                    System.gc();
+                }
             }
         });
 
@@ -56,6 +80,97 @@ public class OrangeResultGUI extends JDialog{
             });
 
         }
+    }
+
+    public String result = "";
+
+    private Thread work;
+
+    public void parse(final String input, final boolean subsump, final boolean unitprop, final boolean purelit) {
+
+        work = new Thread() {
+            @Override
+            public void run() {
+
+                OrangeFormula formula = null;
+
+                printProcess("Parsing the input...");
+                try {
+
+                    ANTLRInputStream inputStream = new ANTLRInputStream(input);
+                    FormulaLexer lexer = new FormulaLexer(inputStream);
+                    CommonTokenStream tokenStream = new CommonTokenStream(lexer);
+                    FormulaParser parser = new FormulaParser(tokenStream);
+                    parser.setBuildParseTree(true);
+                    RuleContext tree = parser.formula();
+
+                    System.out.println(tree.toStringTree(parser));
+
+                    OrangeFormulaVisitor visitor = new OrangeFormulaVisitor();
+
+                    //Print the parseTree generated from the input
+//        Trees.inspect(tree, parser);
+
+                    formula = visitor.visit(tree);
+
+                } catch (Exception e) {
+                    System.out.println("Invalid formula. Couldn't parse it.");
+                    result = "ERROR";
+                    printProcess("Error");
+                    e.printStackTrace();
+                }
+
+                if (formula != null) {
+
+                    //Print the formula after the optimisation
+                    System.out.println("The original result cnf is: \n");
+                    System.out.println(formula.toString() + "\n");
+
+                    boolean ifCanOpt = subsump || unitprop || purelit;
+
+                    while (ifCanOpt) {
+
+                        if (subsump) {
+                            printProcess("Doing Subsumption...");
+                            ifCanOpt = OrangeFormulaOptimiser.subsumption(formula);
+                        }
+
+                        if (unitprop) {
+                            printProcess("Doing Unit propagation...");
+                            ifCanOpt = OrangeFormulaOptimiser.unitPropagation(formula);
+                        }
+
+                        if (purelit) {
+                            printProcess("Doing Pure Literals...");
+                            ifCanOpt = OrangeFormulaOptimiser.pureLiterals(formula);
+                        }
+
+                    }
+
+                    OrangeFormulaSolver solver = new OrangeFormulaSolver(formula);
+
+                    System.out.println("The optimised result cnf is: \n");
+                    System.out.println(formula.toString() + "\n");
+
+                    printProcess("Solving with Sat4j...");
+                    result = solver.solve() ? "SAT" : "UNSAT";
+
+                    printProcess("Done!");
+
+                } else {
+                    result = "ERROR";
+                    printProcess("Error");
+                }
+
+            }
+
+        };
+        work.start();
+
+    }
+
+    private void printProcess(String process) {
+        processLabel.setText(process);
     }
 
     public class StreamCapturer extends OutputStream {

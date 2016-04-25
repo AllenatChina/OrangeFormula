@@ -98,7 +98,6 @@ public class OrangeFormulaVisitor extends FormulaBaseVisitor<OrangeFormula> {
 
     @Override
     public OrangeFormula visitDoNot(FormulaParser.DoNotContext ctx) {
-
         if (ctx.expression() instanceof FormulaParser.DoNotContext) {
             return visit(((FormulaParser.DoNotContext) ctx.expression()).expression());
         } else {

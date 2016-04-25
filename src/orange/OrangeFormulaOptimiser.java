@@ -9,17 +9,20 @@ public class OrangeFormulaOptimiser {
 
     public static OrangeFormula optimise(OrangeFormula formula) {
 
-        subsumption(formula);
+        boolean ifCanOpt = true;
 
-        unitPropagation(formula);
+        while (ifCanOpt) {
+            ifCanOpt = subsumption(formula);
 
-        //TODO: so far pure literals are just detected, not removed, in case of causing optimised formula to be unsatisfiable
-        pureLiterals(formula);
+            ifCanOpt = unitPropagation(formula);
+
+            ifCanOpt = pureLiterals(formula);
+        }
 
         return formula;
     }
 
-    public static OrangeFormula subsumption(OrangeFormula formula) {
+    public static boolean subsumption(OrangeFormula formula) {
 
         List<OrangeClause> clauses = formula.getClauseList();
 
@@ -32,7 +35,7 @@ public class OrangeFormulaOptimiser {
                 if (o2.containsClause(o1)) {
                     return -1;
                 }
-                return o1.getLiterals().size() >= o2.getLiterals().size() ? 1 : -1;
+                return o1.getLiterals().size() - o2.getLiterals().size();
             }
         });
 
@@ -53,12 +56,13 @@ public class OrangeFormulaOptimiser {
 
         if (ifRemovedSth) {
             System.out.println(buffer.toString());
+            return true;
         }
 
-        return formula;
+        return false;
     }
 
-    public static OrangeFormula unitPropagation(OrangeFormula formula) {
+    public static boolean unitPropagation(OrangeFormula formula) {
 
         Set<String> units = new HashSet<String>();
         Set<OrangeClause> clauses = formula.getClauses();
@@ -72,7 +76,7 @@ public class OrangeFormulaOptimiser {
             String negatedUnit = getNegatedLiteral(unit);
             if (units.contains(negatedUnit)) {
                 System.out.println("Found clash during unit propagation: " + unit + " & " + negatedUnit);
-                return formula;
+                return false;
             }
         }
 
@@ -90,12 +94,14 @@ public class OrangeFormulaOptimiser {
         }
         if (!units.isEmpty()) {
             System.out.println("Unit propagation: " + units.toString().replace("[", "").replace("]", ""));
+            return true;
         }
-        return formula;
+        return false;
     }
 
-    private static void pureLiterals(OrangeFormula formula) {
+    public static boolean pureLiterals(OrangeFormula formula) {
 
+        boolean ifRemovedSth = false;
         Set<String> allLiterals = new HashSet<String>();
         for (OrangeClause clause : formula.getClauses()) {
             allLiterals.addAll(clause.getLiterals());
@@ -110,7 +116,24 @@ public class OrangeFormulaOptimiser {
             }
         }
 
-        System.out.println("Pure literals: " + pureLiterals.toString().replace("[", "").replace("]", ""));
+        Iterator<OrangeClause> iterator = formula.getClauses().iterator();
+        while (iterator.hasNext()) {
+            OrangeClause clause = iterator.next();
+            for (String pureLiteral : pureLiterals) {
+                if (clause.containsLiteral(pureLiteral)) {
+                    iterator.remove();
+                    ifRemovedSth = true;
+                    break;
+                }
+            }
+        }
+
+        if (ifRemovedSth) {
+            System.out.println("Pure literals: " + pureLiterals.toString().replace("[", "").replace("]", ""));
+            return true;
+        }
+
+        return false;
     }
 
     private static String getNegatedLiteral(String literal) {

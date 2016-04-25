@@ -4,11 +4,12 @@ import orange.OrangeFormula;
 import orange.OrangeFormulaOptimiser;
 import orange.OrangeFormulaSolver;
 import orange.OrangeFormulaVisitor;
-import org.antlr.v4.runtime.ANTLRInputStream;
-import org.antlr.v4.runtime.CommonTokenStream;
-import org.antlr.v4.runtime.RuleContext;
+import org.antlr.v4.runtime.*;
+import org.antlr.v4.runtime.atn.ATNConfigSet;
+import org.antlr.v4.runtime.dfa.DFA;
 
 import java.io.FileInputStream;
+import java.util.BitSet;
 
 /**
  * Created by yin on 11/04/16.
@@ -26,7 +27,7 @@ public class Main {
             formula = parseInput(input);
         } catch (Exception e) {
             System.out.println("Invalid formula. Couldn't parse it.");
-            e.printStackTrace();
+            System.exit(-1);
         }
 
         if (formula != null) {
@@ -39,7 +40,6 @@ public class Main {
 
             OrangeFormulaSolver solver = new OrangeFormulaSolver(formula);
 
-            //TODO: print the optimized formula
             System.out.println("The optimised result cnf is: \n");
             System.out.println(formula.toString() + "\n");
 
@@ -67,6 +67,27 @@ public class Main {
 
         parser.setBuildParseTree(true);
 
+        parser.addErrorListener(new ANTLRErrorListener() {
+            @Override
+            public void syntaxError(Recognizer<?, ?> recognizer, Object offendingSymbol, int line, int charPositionInLine, String msg, RecognitionException e) {
+                System.out.println("Syntax error.");
+            }
+
+            @Override
+            public void reportAmbiguity(Parser recognizer, DFA dfa, int startIndex, int stopIndex, boolean exact, BitSet ambigAlts, ATNConfigSet configs) {
+                System.out.println("Ambiguity.");
+            }
+
+            @Override
+            public void reportAttemptingFullContext(Parser recognizer, DFA dfa, int startIndex, int stopIndex, BitSet conflictingAlts, ATNConfigSet configs) {
+                System.out.println("Attempting Full Context.");
+            }
+
+            @Override
+            public void reportContextSensitivity(Parser recognizer, DFA dfa, int startIndex, int stopIndex, int prediction, ATNConfigSet configs) {
+                System.out.println("Context Sensitivity.");
+            }
+        });
         RuleContext tree = parser.formula();
 
         System.out.println(tree.toStringTree(parser));

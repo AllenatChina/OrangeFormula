@@ -84,28 +84,28 @@ public class OrangeFormulaConverter {
         List<OrangeFormula> formulas = new ArrayList<OrangeFormula>();
         List<OrangeClause> clauses = formula.getClauseList();
         for (int i = 0; i < clauses.size(); i++) {
-            formulas.add(not(clauses.get(i)).toFormula());
+            formulas.add(not(clauses.get(i)));
         }
 
         return or(formulas);
 
     }
 
-    private static OrangeClause not(OrangeClause clause) {
+    private static OrangeFormula not(OrangeClause clause) {
         List<String> literals = clause.getLiteralList();
-        OrangeClause result = new OrangeClause();
+        List<OrangeFormula> result = new ArrayList<OrangeFormula>();
         for (String literal : literals) {
             if (literal.equals("True")) {
-                result.addLiteral("False");
+                result.add(new OrangeFormula("False"));
             } else if (literal.equals("False")) {
-                result.addLiteral("True");
+                result.add(new OrangeFormula("True"));
             }else if (literal.startsWith("~")) {
-                result.addLiteral(literal.replace("~", ""));
+                result.add(new OrangeFormula(literal.replace("~", "")));
             } else {
-                result.addLiteral("~" + literal);
+                result.add(new OrangeFormula("~" + literal));
             }
         }
-        return result;
+        return and(result);
     }
 
 }
