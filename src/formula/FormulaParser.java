@@ -25,10 +25,10 @@ public class FormulaParser extends Parser {
 		T__17=18, T__18=19, T__19=20, T__20=21, T__21=22, T__22=23, TRUE=24, FALSE=25, 
 		ID=26, VAR=27, NUMBER=28, WS=29, COMMENTS=30;
 	public static final int
-		RULE_formula = 0, RULE_expression = 1, RULE_term = 2, RULE_int_expr = 3, 
+		RULE_formula = 0, RULE_expression = 1, RULE_int_expr = 2, RULE_term = 3, 
 		RULE_range_expr = 4, RULE_set_expr = 5;
 	public static final String[] ruleNames = {
-			"formula", "expression", "term", "int_expr", "range_expr", "set_expr"
+		"formula", "expression", "int_expr", "term", "range_expr", "set_expr"
 	};
 
 	private static final String[] _LITERAL_NAMES = {
@@ -75,7 +75,7 @@ public class FormulaParser extends Parser {
 	}
 
 	@Override
-	public String getGrammarFileName() { return "formula/Formula.g4"; }
+	public String getGrammarFileName() { return "Formula.g4"; }
 
 	@Override
 	public String[] getRuleNames() { return ruleNames; }
@@ -794,115 +794,6 @@ public class FormulaParser extends Parser {
 		return _localctx;
 	}
 
-	public static class TermContext extends ParserRuleContext {
-		public TermContext(ParserRuleContext parent, int invokingState) {
-			super(parent, invokingState);
-		}
-		@Override public int getRuleIndex() { return RULE_term; }
-	 
-		public TermContext() { }
-		public void copyFrom(TermContext ctx) {
-			super.copyFrom(ctx);
-		}
-	}
-	public static class NewTermVarContext extends TermContext {
-		public TerminalNode VAR() { return getToken(FormulaParser.VAR, 0); }
-		public NewTermVarContext(TermContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof FormulaListener ) ((FormulaListener)listener).enterNewTermVar(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof FormulaListener ) ((FormulaListener)listener).exitNewTermVar(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof FormulaVisitor ) return ((FormulaVisitor<? extends T>)visitor).visitNewTermVar(this);
-			else return visitor.visitChildren(this);
-		}
-	}
-	public static class DoIntExprContext extends TermContext {
-		public Int_exprContext int_expr() {
-			return getRuleContext(Int_exprContext.class,0);
-		}
-		public DoIntExprContext(TermContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof FormulaListener ) ((FormulaListener)listener).enterDoIntExpr(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof FormulaListener ) ((FormulaListener)listener).exitDoIntExpr(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof FormulaVisitor ) return ((FormulaVisitor<? extends T>)visitor).visitDoIntExpr(this);
-			else return visitor.visitChildren(this);
-		}
-	}
-	public static class NewTermIDContext extends TermContext {
-		public TerminalNode ID() { return getToken(FormulaParser.ID, 0); }
-		public NewTermIDContext(TermContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof FormulaListener ) ((FormulaListener)listener).enterNewTermID(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof FormulaListener ) ((FormulaListener)listener).exitNewTermID(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof FormulaVisitor ) return ((FormulaVisitor<? extends T>)visitor).visitNewTermID(this);
-			else return visitor.visitChildren(this);
-		}
-	}
-
-	public final TermContext term() throws RecognitionException {
-		TermContext _localctx = new TermContext(_ctx, getState());
-		enterRule(_localctx, 4, RULE_term);
-		try {
-			setState(94);
-			_errHandler.sync(this);
-			switch ( getInterpreter().adaptivePredict(_input,7,_ctx) ) {
-			case 1:
-				_localctx = new NewTermIDContext(_localctx);
-				enterOuterAlt(_localctx, 1);
-				{
-				setState(91);
-				match(ID);
-				}
-				break;
-			case 2:
-				_localctx = new NewTermVarContext(_localctx);
-				enterOuterAlt(_localctx, 2);
-				{
-				setState(92);
-				match(VAR);
-				}
-				break;
-			case 3:
-				_localctx = new DoIntExprContext(_localctx);
-				enterOuterAlt(_localctx, 3);
-				{
-				setState(93);
-				int_expr(0);
-				}
-				break;
-			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			_errHandler.reportError(this, re);
-			_errHandler.recover(this, re);
-		}
-		finally {
-			exitRule();
-		}
-		return _localctx;
-	}
-
 	public static class Int_exprContext extends ParserRuleContext {
 		public Int_exprContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -1061,14 +952,14 @@ public class FormulaParser extends Parser {
 		int _parentState = getState();
 		Int_exprContext _localctx = new Int_exprContext(_ctx, _parentState);
 		Int_exprContext _prevctx = _localctx;
-		int _startState = 6;
-		enterRecursionRule(_localctx, 6, RULE_int_expr, _p);
+		int _startState = 4;
+		enterRecursionRule(_localctx, 4, RULE_int_expr, _p);
 		int _la;
 		try {
 			int _alt;
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(109);
+			setState(104);
 			switch (_input.LA(1)) {
 			case T__0:
 				{
@@ -1076,11 +967,11 @@ public class FormulaParser extends Parser {
 				_ctx = _localctx;
 				_prevctx = _localctx;
 
-				setState(97);
+				setState(92);
 				match(T__0);
-				setState(98);
+				setState(93);
 				int_expr(0);
-				setState(99);
+				setState(94);
 				match(T__2);
 				}
 				break;
@@ -1089,11 +980,11 @@ public class FormulaParser extends Parser {
 				_localctx = new AbsValueExpressionContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
-				setState(101);
+				setState(96);
 				match(T__10);
-				setState(102);
+				setState(97);
 				int_expr(0);
-				setState(103);
+				setState(98);
 				match(T__10);
 				}
 				break;
@@ -1102,9 +993,9 @@ public class FormulaParser extends Parser {
 				_localctx = new UnaryMinusExpressionContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
-				setState(105);
+				setState(100);
 				match(T__15);
-				setState(106);
+				setState(101);
 				int_expr(5);
 				}
 				break;
@@ -1113,7 +1004,7 @@ public class FormulaParser extends Parser {
 				_localctx = new NewIntVariableContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
-				setState(107);
+				setState(102);
 				match(VAR);
 				}
 				break;
@@ -1122,7 +1013,7 @@ public class FormulaParser extends Parser {
 				_localctx = new NewIntegerContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
-				setState(108);
+				setState(103);
 				match(NUMBER);
 				}
 				break;
@@ -1130,24 +1021,24 @@ public class FormulaParser extends Parser {
 				throw new NoViableAltException(this);
 			}
 			_ctx.stop = _input.LT(-1);
-			setState(119);
+			setState(114);
 			_errHandler.sync(this);
-			_alt = getInterpreter().adaptivePredict(_input,10,_ctx);
+			_alt = getInterpreter().adaptivePredict(_input,9,_ctx);
 			while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
 				if ( _alt==1 ) {
 					if ( _parseListeners!=null ) triggerExitRuleEvent();
 					_prevctx = _localctx;
 					{
-					setState(117);
+					setState(112);
 					_errHandler.sync(this);
-					switch ( getInterpreter().adaptivePredict(_input,9,_ctx) ) {
+					switch ( getInterpreter().adaptivePredict(_input,8,_ctx) ) {
 					case 1:
 						{
 						_localctx = new MultiplicativeExpressionContext(new Int_exprContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_int_expr);
-						setState(111);
+						setState(106);
 						if (!(precpred(_ctx, 4))) throw new FailedPredicateException(this, "precpred(_ctx, 4)");
-						setState(112);
+						setState(107);
 						((MultiplicativeExpressionContext)_localctx).op = _input.LT(1);
 						_la = _input.LA(1);
 						if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__16) | (1L << T__17) | (1L << T__18))) != 0)) ) {
@@ -1155,7 +1046,7 @@ public class FormulaParser extends Parser {
 						} else {
 							consume();
 						}
-						setState(113);
+						setState(108);
 						int_expr(5);
 						}
 						break;
@@ -1163,9 +1054,9 @@ public class FormulaParser extends Parser {
 						{
 						_localctx = new AdditiveExpressionContext(new Int_exprContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_int_expr);
-						setState(114);
+						setState(109);
 						if (!(precpred(_ctx, 3))) throw new FailedPredicateException(this, "precpred(_ctx, 3)");
-						setState(115);
+						setState(110);
 						((AdditiveExpressionContext)_localctx).op = _input.LT(1);
 						_la = _input.LA(1);
 						if ( !(_la==T__15 || _la==T__19) ) {
@@ -1173,16 +1064,16 @@ public class FormulaParser extends Parser {
 						} else {
 							consume();
 						}
-						setState(116);
+						setState(111);
 						int_expr(4);
 						}
 						break;
 					}
 					} 
 				}
-				setState(121);
+				setState(116);
 				_errHandler.sync(this);
-				_alt = getInterpreter().adaptivePredict(_input,10,_ctx);
+				_alt = getInterpreter().adaptivePredict(_input,9,_ctx);
 			}
 			}
 		}
@@ -1193,6 +1084,115 @@ public class FormulaParser extends Parser {
 		}
 		finally {
 			unrollRecursionContexts(_parentctx);
+		}
+		return _localctx;
+	}
+
+	public static class TermContext extends ParserRuleContext {
+		public TermContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_term; }
+	 
+		public TermContext() { }
+		public void copyFrom(TermContext ctx) {
+			super.copyFrom(ctx);
+		}
+	}
+	public static class NewTermVarContext extends TermContext {
+		public TerminalNode VAR() { return getToken(FormulaParser.VAR, 0); }
+		public NewTermVarContext(TermContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof FormulaListener ) ((FormulaListener)listener).enterNewTermVar(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof FormulaListener ) ((FormulaListener)listener).exitNewTermVar(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof FormulaVisitor ) return ((FormulaVisitor<? extends T>)visitor).visitNewTermVar(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class DoIntExprContext extends TermContext {
+		public Int_exprContext int_expr() {
+			return getRuleContext(Int_exprContext.class,0);
+		}
+		public DoIntExprContext(TermContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof FormulaListener ) ((FormulaListener)listener).enterDoIntExpr(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof FormulaListener ) ((FormulaListener)listener).exitDoIntExpr(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof FormulaVisitor ) return ((FormulaVisitor<? extends T>)visitor).visitDoIntExpr(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class NewTermIDContext extends TermContext {
+		public TerminalNode ID() { return getToken(FormulaParser.ID, 0); }
+		public NewTermIDContext(TermContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof FormulaListener ) ((FormulaListener)listener).enterNewTermID(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof FormulaListener ) ((FormulaListener)listener).exitNewTermID(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof FormulaVisitor ) return ((FormulaVisitor<? extends T>)visitor).visitNewTermID(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+
+	public final TermContext term() throws RecognitionException {
+		TermContext _localctx = new TermContext(_ctx, getState());
+		enterRule(_localctx, 6, RULE_term);
+		try {
+			setState(120);
+			_errHandler.sync(this);
+			switch ( getInterpreter().adaptivePredict(_input,10,_ctx) ) {
+			case 1:
+				_localctx = new NewTermIDContext(_localctx);
+				enterOuterAlt(_localctx, 1);
+				{
+				setState(117);
+				match(ID);
+				}
+				break;
+			case 2:
+				_localctx = new NewTermVarContext(_localctx);
+				enterOuterAlt(_localctx, 2);
+				{
+				setState(118);
+				match(VAR);
+				}
+				break;
+			case 3:
+				_localctx = new DoIntExprContext(_localctx);
+				enterOuterAlt(_localctx, 3);
+				{
+				setState(119);
+				int_expr(0);
+				}
+				break;
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
 		}
 		return _localctx;
 	}
@@ -1326,7 +1326,7 @@ public class FormulaParser extends Parser {
 		switch (ruleIndex) {
 		case 1:
 			return expression_sempred((ExpressionContext)_localctx, predIndex);
-		case 3:
+		case 2:
 			return int_expr_sempred((Int_exprContext)_localctx, predIndex);
 		}
 		return true;
@@ -1367,15 +1367,15 @@ public class FormulaParser extends Parser {
 		"\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\5\3.\n\3\3\3\3\3\3\3\3\3\3\3\3"+
 		"\3\3\3\5\3\67\n\3\3\3\3\3\3\3\3\3\3\3\3\3\5\3?\n\3\3\3\3\3\3\3\3\3\3\3"+
 		"\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3"+
-		"\3\3\3\7\3Y\n\3\f\3\16\3\\\13\3\3\4\3\4\3\4\5\4a\n\4\3\5\3\5\3\5\3\5\3"+
-		"\5\3\5\3\5\3\5\3\5\3\5\3\5\3\5\3\5\5\5p\n\5\3\5\3\5\3\5\3\5\3\5\3\5\7"+
-		"\5x\n\5\f\5\16\5{\13\5\3\6\3\6\3\6\3\6\3\6\3\6\3\6\3\7\3\7\3\7\3\7\7\7"+
-		"\u0088\n\7\f\7\16\7\u008b\13\7\3\7\3\7\3\7\2\4\4\b\b\2\4\6\b\n\f\2\4\3"+
-		"\2\23\25\4\2\22\22\26\26\u00a4\2\17\3\2\2\2\4>\3\2\2\2\6`\3\2\2\2\bo\3"+
-		"\2\2\2\n|\3\2\2\2\f\u0083\3\2\2\2\16\20\5\4\3\2\17\16\3\2\2\2\20\21\3"+
-		"\2\2\2\21\17\3\2\2\2\21\22\3\2\2\2\22\23\3\2\2\2\23\24\7\2\2\3\24\3\3"+
-		"\2\2\2\25\26\b\3\1\2\26\27\7\34\2\2\27\30\7\3\2\2\30\35\5\6\4\2\31\32"+
-		"\7\4\2\2\32\34\5\6\4\2\33\31\3\2\2\2\34\37\3\2\2\2\35\33\3\2\2\2\35\36"+
+		"\3\3\3\7\3Y\n\3\f\3\16\3\\\13\3\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3"+
+		"\4\3\4\3\4\3\4\5\4k\n\4\3\4\3\4\3\4\3\4\3\4\3\4\7\4s\n\4\f\4\16\4v\13"+
+		"\4\3\5\3\5\3\5\5\5{\n\5\3\6\3\6\3\6\3\6\3\6\3\6\3\6\3\7\3\7\3\7\3\7\7"+
+		"\7\u0088\n\7\f\7\16\7\u008b\13\7\3\7\3\7\3\7\2\4\4\6\b\2\4\6\b\n\f\2\4"+
+		"\3\2\23\25\4\2\22\22\26\26\u00a4\2\17\3\2\2\2\4>\3\2\2\2\6j\3\2\2\2\b"+
+		"z\3\2\2\2\n|\3\2\2\2\f\u0083\3\2\2\2\16\20\5\4\3\2\17\16\3\2\2\2\20\21"+
+		"\3\2\2\2\21\17\3\2\2\2\21\22\3\2\2\2\22\23\3\2\2\2\23\24\7\2\2\3\24\3"+
+		"\3\2\2\2\25\26\b\3\1\2\26\27\7\34\2\2\27\30\7\3\2\2\30\35\5\b\5\2\31\32"+
+		"\7\4\2\2\32\34\5\b\5\2\33\31\3\2\2\2\34\37\3\2\2\2\35\33\3\2\2\2\35\36"+
 		"\3\2\2\2\36 \3\2\2\2\37\35\3\2\2\2 !\7\5\2\2!?\3\2\2\2\"#\7\3\2\2#$\5"+
 		"\4\3\2$%\7\5\2\2%?\3\2\2\2&\'\7\6\2\2\'?\5\4\3\20()\7\17\2\2)*\7\35\2"+
 		"\2*-\7\20\2\2+.\5\n\6\2,.\5\f\7\2-+\3\2\2\2-,\3\2\2\2./\3\2\2\2/\60\5"+
@@ -1388,18 +1388,18 @@ public class FormulaParser extends Parser {
 		"L\5\4\3\2LM\7\13\2\2MN\5\4\3\rNY\3\2\2\2OP\f\13\2\2PQ\7\f\2\2QY\5\4\3"+
 		"\fRS\f\n\2\2ST\7\r\2\2TY\5\4\3\13UV\f\t\2\2VW\7\16\2\2WY\5\4\3\nX@\3\2"+
 		"\2\2XC\3\2\2\2XF\3\2\2\2XI\3\2\2\2XO\3\2\2\2XR\3\2\2\2XU\3\2\2\2Y\\\3"+
-		"\2\2\2ZX\3\2\2\2Z[\3\2\2\2[\5\3\2\2\2\\Z\3\2\2\2]a\7\34\2\2^a\7\35\2\2"+
-		"_a\5\b\5\2`]\3\2\2\2`^\3\2\2\2`_\3\2\2\2a\7\3\2\2\2bc\b\5\1\2cd\7\3\2"+
-		"\2de\5\b\5\2ef\7\5\2\2fp\3\2\2\2gh\7\r\2\2hi\5\b\5\2ij\7\r\2\2jp\3\2\2"+
-		"\2kl\7\22\2\2lp\5\b\5\7mp\7\35\2\2np\7\36\2\2ob\3\2\2\2og\3\2\2\2ok\3"+
-		"\2\2\2om\3\2\2\2on\3\2\2\2py\3\2\2\2qr\f\6\2\2rs\t\2\2\2sx\5\b\5\7tu\f"+
-		"\5\2\2uv\t\3\2\2vx\5\b\5\6wq\3\2\2\2wt\3\2\2\2x{\3\2\2\2yw\3\2\2\2yz\3"+
-		"\2\2\2z\t\3\2\2\2{y\3\2\2\2|}\7\27\2\2}~\5\b\5\2~\177\7\30\2\2\177\u0080"+
-		"\5\b\5\2\u0080\u0081\3\2\2\2\u0081\u0082\7\31\2\2\u0082\13\3\2\2\2\u0083"+
-		"\u0084\7\27\2\2\u0084\u0089\5\6\4\2\u0085\u0086\7\4\2\2\u0086\u0088\5"+
-		"\6\4\2\u0087\u0085\3\2\2\2\u0088\u008b\3\2\2\2\u0089\u0087\3\2\2\2\u0089"+
+		"\2\2\2ZX\3\2\2\2Z[\3\2\2\2[\5\3\2\2\2\\Z\3\2\2\2]^\b\4\1\2^_\7\3\2\2_"+
+		"`\5\6\4\2`a\7\5\2\2ak\3\2\2\2bc\7\r\2\2cd\5\6\4\2de\7\r\2\2ek\3\2\2\2"+
+		"fg\7\22\2\2gk\5\6\4\7hk\7\35\2\2ik\7\36\2\2j]\3\2\2\2jb\3\2\2\2jf\3\2"+
+		"\2\2jh\3\2\2\2ji\3\2\2\2kt\3\2\2\2lm\f\6\2\2mn\t\2\2\2ns\5\6\4\7op\f\5"+
+		"\2\2pq\t\3\2\2qs\5\6\4\6rl\3\2\2\2ro\3\2\2\2sv\3\2\2\2tr\3\2\2\2tu\3\2"+
+		"\2\2u\7\3\2\2\2vt\3\2\2\2w{\7\34\2\2x{\7\35\2\2y{\5\6\4\2zw\3\2\2\2zx"+
+		"\3\2\2\2zy\3\2\2\2{\t\3\2\2\2|}\7\27\2\2}~\5\6\4\2~\177\7\30\2\2\177\u0080"+
+		"\5\6\4\2\u0080\u0081\3\2\2\2\u0081\u0082\7\31\2\2\u0082\13\3\2\2\2\u0083"+
+		"\u0084\7\27\2\2\u0084\u0089\5\b\5\2\u0085\u0086\7\4\2\2\u0086\u0088\5"+
+		"\b\5\2\u0087\u0085\3\2\2\2\u0088\u008b\3\2\2\2\u0089\u0087\3\2\2\2\u0089"+
 		"\u008a\3\2\2\2\u008a\u008c\3\2\2\2\u008b\u0089\3\2\2\2\u008c\u008d\7\31"+
-		"\2\2\u008d\r\3\2\2\2\16\21\35-\66>XZ`owy\u0089";
+		"\2\2\u008d\r\3\2\2\2\16\21\35-\66>XZjrtz\u0089";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

@@ -128,27 +128,6 @@ public interface FormulaVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitDoNot(FormulaParser.DoNotContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code newTermID}
-	 * labeled alternative in {@link FormulaParser#term}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitNewTermID(FormulaParser.NewTermIDContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code newTermVar}
-	 * labeled alternative in {@link FormulaParser#term}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitNewTermVar(FormulaParser.NewTermVarContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code doIntExpr}
-	 * labeled alternative in {@link FormulaParser#term}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitDoIntExpr(FormulaParser.DoIntExprContext ctx);
-	/**
 	 * Visit a parse tree produced by the {@code unaryMinusExpression}
 	 * labeled alternative in {@link FormulaParser#int_expr}.
 	 * @param ctx the parse tree
@@ -197,6 +176,27 @@ public interface FormulaVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitMultiplicativeExpression(FormulaParser.MultiplicativeExpressionContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code newTermID}
+	 * labeled alternative in {@link FormulaParser#term}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitNewTermID(FormulaParser.NewTermIDContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code newTermVar}
+	 * labeled alternative in {@link FormulaParser#term}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitNewTermVar(FormulaParser.NewTermVarContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code doIntExpr}
+	 * labeled alternative in {@link FormulaParser#term}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitDoIntExpr(FormulaParser.DoIntExprContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link FormulaParser#range_expr}.
 	 * @param ctx the parse tree

@@ -209,42 +209,6 @@ public interface FormulaListener extends ParseTreeListener {
 	 */
 	void exitDoNot(FormulaParser.DoNotContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code newTermID}
-	 * labeled alternative in {@link FormulaParser#term}.
-	 * @param ctx the parse tree
-	 */
-	void enterNewTermID(FormulaParser.NewTermIDContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code newTermID}
-	 * labeled alternative in {@link FormulaParser#term}.
-	 * @param ctx the parse tree
-	 */
-	void exitNewTermID(FormulaParser.NewTermIDContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code newTermVar}
-	 * labeled alternative in {@link FormulaParser#term}.
-	 * @param ctx the parse tree
-	 */
-	void enterNewTermVar(FormulaParser.NewTermVarContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code newTermVar}
-	 * labeled alternative in {@link FormulaParser#term}.
-	 * @param ctx the parse tree
-	 */
-	void exitNewTermVar(FormulaParser.NewTermVarContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code doIntExpr}
-	 * labeled alternative in {@link FormulaParser#term}.
-	 * @param ctx the parse tree
-	 */
-	void enterDoIntExpr(FormulaParser.DoIntExprContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code doIntExpr}
-	 * labeled alternative in {@link FormulaParser#term}.
-	 * @param ctx the parse tree
-	 */
-	void exitDoIntExpr(FormulaParser.DoIntExprContext ctx);
-	/**
 	 * Enter a parse tree produced by the {@code unaryMinusExpression}
 	 * labeled alternative in {@link FormulaParser#int_expr}.
 	 * @param ctx the parse tree
@@ -328,6 +292,42 @@ public interface FormulaListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitMultiplicativeExpression(FormulaParser.MultiplicativeExpressionContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code newTermID}
+	 * labeled alternative in {@link FormulaParser#term}.
+	 * @param ctx the parse tree
+	 */
+	void enterNewTermID(FormulaParser.NewTermIDContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code newTermID}
+	 * labeled alternative in {@link FormulaParser#term}.
+	 * @param ctx the parse tree
+	 */
+	void exitNewTermID(FormulaParser.NewTermIDContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code newTermVar}
+	 * labeled alternative in {@link FormulaParser#term}.
+	 * @param ctx the parse tree
+	 */
+	void enterNewTermVar(FormulaParser.NewTermVarContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code newTermVar}
+	 * labeled alternative in {@link FormulaParser#term}.
+	 * @param ctx the parse tree
+	 */
+	void exitNewTermVar(FormulaParser.NewTermVarContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code doIntExpr}
+	 * labeled alternative in {@link FormulaParser#term}.
+	 * @param ctx the parse tree
+	 */
+	void enterDoIntExpr(FormulaParser.DoIntExprContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code doIntExpr}
+	 * labeled alternative in {@link FormulaParser#term}.
+	 * @param ctx the parse tree
+	 */
+	void exitDoIntExpr(FormulaParser.DoIntExprContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link FormulaParser#range_expr}.
 	 * @param ctx the parse tree

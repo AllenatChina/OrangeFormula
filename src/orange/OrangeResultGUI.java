@@ -5,6 +5,7 @@ import formula.FormulaParser;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.RuleContext;
+import org.sat4j.specs.TimeoutException;
 
 import javax.swing.*;
 import java.awt.*;
@@ -39,22 +40,6 @@ public class OrangeResultGUI extends JDialog{
         addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
                 onOK();
-            }
-        });
-
-        buttonStop.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (work != null) {
-                    if (work.getState() == Thread.State.TERMINATED) {
-                        printProcess("Already stopped!");
-                    }else {
-                        work.stop();
-                        printProcess("Stopped!");
-                        result = "STOPPED";
-                    }
-                    System.gc();
-                }
             }
         });
 
@@ -147,13 +132,50 @@ public class OrangeResultGUI extends JDialog{
 
                     }
 
-                    OrangeFormulaSolver solver = new OrangeFormulaSolver(formula);
+                    final OrangeFormulaSolver solver = new OrangeFormulaSolver(formula);
 
                     System.out.println("The optimised result cnf is: \n");
                     System.out.println(formula.toString() + "\n");
 
                     printProcess("Solving with Sat4j...");
                     result = solver.solve() ? "SAT" : "UNSAT";
+
+                    buttonStop.addActionListener(new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            if (work != null) {
+                                if (work.getState() == Thread.State.TERMINATED) {
+
+                                    if (buttonStop.getText().equals("STOP")) {
+                                        printProcess("Already stopped!");
+                                    } else {
+                                        if (result.equals("UNSAT")) {
+
+                                            System.out.println("$ The cnf is unsatisfiable.");
+
+                                        } else if (result.equals("SAT")){
+                                            buttonStop.setText("STOP");
+                                            printProcess("Finding more models with Sat4j...");
+                                            try {
+                                                solver.printOtherSolutions();
+                                            } catch (TimeoutException e1) {
+                                                System.out.println("$ The solver is unable to finish solving in two minutes. TIMEOUT!");
+                                            }
+                                            printProcess("DONE!");
+                                        } else if (result.equals("ERROR")) {
+
+                                        }
+                                    }
+                                }else {
+                                    if (buttonStop.getText().equals("STOP")) {
+                                        work.stop();
+                                        printProcess("Stopped!");
+                                    }
+                                }
+                                System.gc();
+                            }
+                        }
+                    });
 
                     printProcess("Done!");
 

@@ -1,1 +1,1 @@
-(~(p|~p))
+forall _x in {_d..2} p(_x)

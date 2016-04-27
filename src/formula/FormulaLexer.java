@@ -81,7 +81,7 @@ public class FormulaLexer extends Lexer {
 	}
 
 	@Override
-	public String getGrammarFileName() { return "formula/Formula.g4"; }
+	public String getGrammarFileName() { return "Formula.g4"; }
 
 	@Override
 	public String[] getRuleNames() { return ruleNames; }

@@ -65,7 +65,7 @@ public class OrangeFormulaSolver {
             System.out.println("$ The cnf is unsatisfiable.");
 //            e.printStackTrace();
         } catch (TimeoutException e) {
-            System.out.println("$ The solver is unable to solve the cnf in two minutes. TIMEOUT!");
+            System.out.println("$ The solver is unable to finish solving in two minutes. TIMEOUT!");
         }
 
         return false;
@@ -97,11 +97,13 @@ public class OrangeFormulaSolver {
 
     }
 
+    private ModelIterator mi;
+
     private boolean solveDIMACS() throws IOException, ParseFormatException, ContradictionException, TimeoutException {
 
         LecteurDimacs reader = new LecteurDimacs(SolverFactory.newDefault());
         ISolver solver = (ISolver) reader.parseInstance("dimacs.cnf");
-        ModelIterator mi = new ModelIterator(solver);
+        mi = new ModelIterator(solver);
         mi.setTimeout(120);
 
         if (mi.isSatisfiable()) {
@@ -114,7 +116,7 @@ public class OrangeFormulaSolver {
 //            PrintWriter writer = new PrintWriter(System.out);
 //            solver.printStat(writer);
 //            writer.close();
-            printOtherSolutions(mi);
+//            printOtherSolutions(mi);
 
             return true;
 
@@ -134,16 +136,21 @@ public class OrangeFormulaSolver {
         System.out.println(solMappings.toString() + "\n");
     }
 
-    private void printOtherSolutions(ModelIterator solver) throws TimeoutException {
-        System.out.println("$ Other models are: \n");
-        long n = solver.numberOfModelsFoundSoFar();
-        while (solver.isSatisfiable()) {
-            int[] sol = solver.model();
-            for (String s : varMappings.keySet()) {
-                solMappings.put(s, sol[varMappings.get(s) - 1] > 0 ? 1 : 0);
-            }
+    public void printOtherSolutions() throws TimeoutException {
+        if (mi != null) {
+            long n = mi.numberOfModelsFoundSoFar();
+            long i = 0;
+            while (mi.isSatisfiable()) {
+                if (i++ == 0) {
+                    System.out.println("$ Other models are: \n");
+                }
+                int[] sol = mi.model();
+                for (String s : varMappings.keySet()) {
+                    solMappings.put(s, sol[varMappings.get(s) - 1] > 0 ? 1 : 0);
+                }
 
-            System.out.println(solMappings.toString() + "\n");
+                System.out.println(solMappings.toString() + "\n");
+            }
         }
     }
 

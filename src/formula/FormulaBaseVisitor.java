@@ -1,8 +1,6 @@
 package formula;// Generated from Formula.g4 by ANTLR 4.5.3
 import org.antlr.v4.runtime.tree.AbstractParseTreeVisitor;
 
-import java.util.List;
-
 /**
  * This class provides an empty implementation of {@link FormulaVisitor},
  * which can be extended to create a visitor which only needs to handle a subset
@@ -12,20 +10,13 @@ import java.util.List;
  * operations with no return type.
  */
 public class FormulaBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements FormulaVisitor<T> {
-
-
-
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitFormula(FormulaParser.FormulaContext ctx) {
-
-		List<FormulaParser.ExpressionContext> expressions = ctx.expression();
-
-		return visitChildren(ctx); }
+	@Override public T visitFormula(FormulaParser.FormulaContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -144,27 +135,6 @@ public class FormulaBaseVisitor<T> extends AbstractParseTreeVisitor<T> implement
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitNewTermID(FormulaParser.NewTermIDContext ctx) { return visitChildren(ctx); }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation returns the result of calling
-	 * {@link #visitChildren} on {@code ctx}.</p>
-	 */
-	@Override public T visitNewTermVar(FormulaParser.NewTermVarContext ctx) { return visitChildren(ctx); }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation returns the result of calling
-	 * {@link #visitChildren} on {@code ctx}.</p>
-	 */
-	@Override public T visitDoIntExpr(FormulaParser.DoIntExprContext ctx) { return visitChildren(ctx); }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation returns the result of calling
-	 * {@link #visitChildren} on {@code ctx}.</p>
-	 */
 	@Override public T visitUnaryMinusExpression(FormulaParser.UnaryMinusExpressionContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
@@ -208,6 +178,27 @@ public class FormulaBaseVisitor<T> extends AbstractParseTreeVisitor<T> implement
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
 	@Override public T visitMultiplicativeExpression(FormulaParser.MultiplicativeExpressionContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitNewTermID(FormulaParser.NewTermIDContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitNewTermVar(FormulaParser.NewTermVarContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitDoIntExpr(FormulaParser.DoIntExprContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *

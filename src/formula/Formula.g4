@@ -21,12 +21,6 @@ expression
     | ID                                                        # newIdentifier
     ;
 
-term
-    : ID                                              # newTermID
-    | VAR                                             # newTermVar
-    | int_expr                                        # doIntExpr
-    ;
-
 int_expr
     : '(' int_expr ')'                                # parenthesizedIntExpression
     | '|' int_expr '|'                                # absValueExpression
@@ -37,7 +31,13 @@ int_expr
     | NUMBER                                          # newInteger
     ;
 
-range_expr 
+term
+    : ID                                              # newTermID
+    | VAR                                             # newTermVar
+    | int_expr                                        # doIntExpr
+    ;
+
+range_expr
     : '{' (int_expr '..' int_expr) '}' ;
 
 set_expr 

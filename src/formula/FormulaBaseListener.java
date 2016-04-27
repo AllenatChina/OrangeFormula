@@ -219,42 +219,6 @@ public class FormulaBaseListener implements FormulaListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterNewTermID(FormulaParser.NewTermIDContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitNewTermID(FormulaParser.NewTermIDContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterNewTermVar(FormulaParser.NewTermVarContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitNewTermVar(FormulaParser.NewTermVarContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterDoIntExpr(FormulaParser.DoIntExprContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitDoIntExpr(FormulaParser.DoIntExprContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void enterUnaryMinusExpression(FormulaParser.UnaryMinusExpressionContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -339,10 +303,43 @@ public class FormulaBaseListener implements FormulaListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterRange_expr(FormulaParser.Range_exprContext ctx) {
-
-
-	}
+	@Override public void enterNewTermID(FormulaParser.NewTermIDContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitNewTermID(FormulaParser.NewTermIDContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterNewTermVar(FormulaParser.NewTermVarContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitNewTermVar(FormulaParser.NewTermVarContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterDoIntExpr(FormulaParser.DoIntExprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitDoIntExpr(FormulaParser.DoIntExprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterRange_expr(FormulaParser.Range_exprContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -354,9 +351,7 @@ public class FormulaBaseListener implements FormulaListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterSet_expr(FormulaParser.Set_exprContext ctx) {
-
-	}
+	@Override public void enterSet_expr(FormulaParser.Set_exprContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
