@@ -9,14 +9,10 @@ public class OrangeFormulaOptimiser {
 
     public static OrangeFormula optimise(OrangeFormula formula) {
 
-        boolean ifCanOpt = true;
 
-        while (ifCanOpt) {
-            ifCanOpt = subsumption(formula);
-
-            ifCanOpt = unitPropagation(formula);
-
-            ifCanOpt = pureLiterals(formula);
+        while (subsumption(formula)
+                || unitPropagation(formula)
+                || pureLiterals(formula)) {
         }
 
         return formula;
@@ -42,12 +38,14 @@ public class OrangeFormulaOptimiser {
         StringBuffer buffer = new StringBuffer("Subsumption removed: ");
         boolean ifRemovedSth = false;
 
+        long n = 0;
         for (int i = 0; i < clauses.size() - 1; i++) {
             for (int j = i + 1; j < clauses.size(); j++) {
                 OrangeClause smaller = clauses.get(i);
                 OrangeClause bigger = clauses.get(j);
                 if (bigger.containsClause(smaller)) {
                     formula.removeClause(bigger);
+                    n++;
                     ifRemovedSth = true;
                     buffer.append(bigger.toString() + " ");
                 }
@@ -55,11 +53,12 @@ public class OrangeFormulaOptimiser {
         }
 
         if (ifRemovedSth) {
-            System.out.println(buffer.toString());
+            System.out.println(buffer.toString() + " #total: " + n);
             return true;
+        } else {
+            return false;
         }
 
-        return false;
     }
 
     public static boolean unitPropagation(OrangeFormula formula) {
@@ -93,10 +92,12 @@ public class OrangeFormulaOptimiser {
             }
         }
         if (!units.isEmpty()) {
-            System.out.println("Unit propagation: " + units.toString().replace("[", "").replace("]", ""));
+            System.out.println("Unit propagation: " + units.toString().replace("[", "").replace("]", "")
+                    + " #total: " + units.size());
             return true;
+        } else {
+            return false;
         }
-        return false;
     }
 
     public static boolean pureLiterals(OrangeFormula formula) {
@@ -129,11 +130,13 @@ public class OrangeFormulaOptimiser {
         }
 
         if (ifRemovedSth) {
-            System.out.println("Pure literals: " + pureLiterals.toString().replace("[", "").replace("]", ""));
+            System.out.println("Pure literals: " + pureLiterals.toString().replace("[", "").replace("]", "")
+                    + " #total: " + pureLiterals.size());
             return true;
+        } else {
+            return false;
         }
 
-        return false;
     }
 
     private static String getNegatedLiteral(String literal) {
@@ -145,5 +148,7 @@ public class OrangeFormulaOptimiser {
         }
         return negatedUnit;
     }
+
+
 
 }

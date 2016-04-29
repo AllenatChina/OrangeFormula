@@ -25,16 +25,22 @@ public class OrangeFormulaSolver {
     private Map<String, Integer> varMappings;
     private Map<String, Integer> solMappings;
 
+    private String id;
+
     public OrangeFormulaSolver(OrangeFormula formula) {
         this.formula = formula;
         varMappings = formula.getMapToInt();
         solMappings = new HashMap<String, Integer>();
     }
 
+    public void setId(String id) {
+        this.id = id;
+    }
+
     public boolean solve() {
 
         System.out.println("By mapping variables to integers,");
-        System.out.println(formula.getMapToInt().toString());
+        System.out.println(varMappings.toString());
         System.out.println("we get DIMACS Clauses:\n");
         for (int[] clauses : formula.getIntClauses()) {
             System.out.print("[");
@@ -65,7 +71,7 @@ public class OrangeFormulaSolver {
             System.out.println("$ The cnf is unsatisfiable.");
 //            e.printStackTrace();
         } catch (TimeoutException e) {
-            System.out.println("$ The solver is unable to finish solving in two minutes. TIMEOUT!");
+            System.out.println("$ The solver is unable to finish solving in a short time. TIMEOUT!");
         }
 
         return false;
@@ -73,12 +79,14 @@ public class OrangeFormulaSolver {
 
     private void writeDIMACS() throws IOException {
 
-        FileWriter fileWriter = new FileWriter("dimacs.cnf");
+        FileWriter fileWriter = new FileWriter("dimacs" + (id == null ? "" : ("_" + id)) + ".cnf");
 
         BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
 
         List<int[]> clauses = formula.getIntClauses();
 
+        bufferedWriter.write("c variable mappings: " + varMappings.toString());
+        bufferedWriter.newLine();
         bufferedWriter.write("p cnf " + varMappings.keySet().size() + " " + clauses.size());
         bufferedWriter.newLine();
 
@@ -104,7 +112,6 @@ public class OrangeFormulaSolver {
         LecteurDimacs reader = new LecteurDimacs(SolverFactory.newDefault());
         ISolver solver = (ISolver) reader.parseInstance("dimacs.cnf");
         mi = new ModelIterator(solver);
-        mi.setTimeout(120);
 
         if (mi.isSatisfiable()) {
             System.out.println("$ The cnf is satisfiable:\n");

@@ -13,9 +13,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.PrintStream;
+import java.io.*;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 public class OrangeResultGUI extends JDialog{
     private JPanel contentPane;
@@ -48,6 +48,13 @@ public class OrangeResultGUI extends JDialog{
     }
 
     private void onOK() {
+        if (logWriter != null) {
+            try {
+                logWriter.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
         dispose();
     }
 
@@ -55,6 +62,14 @@ public class OrangeResultGUI extends JDialog{
         if (EventQueue.isDispatchThread()) {
             output.append(text);
             output.setCaretPosition(output.getText().length());
+            if (logWriter != null) {
+                try {
+                    logWriter.write(text);
+                    logWriter.newLine();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
         } else {
 
             EventQueue.invokeLater(new Runnable() {
@@ -70,12 +85,23 @@ public class OrangeResultGUI extends JDialog{
     public String result = "";
 
     private Thread work;
+    private BufferedWriter logWriter;
 
     public void parse(final String input, final boolean subsump, final boolean unitprop, final boolean purelit) {
 
         work = new Thread() {
             @Override
             public void run() {
+
+                Calendar calendar = Calendar.getInstance();
+                String id = new SimpleDateFormat("yyyyMMdd_HH:mm:ss").format(calendar.getTime());
+                try {
+                    logWriter = new BufferedWriter(new FileWriter("result_" + id + ".txt"));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                long start = System.currentTimeMillis();
 
                 OrangeFormula formula = null;
 
@@ -87,6 +113,9 @@ public class OrangeResultGUI extends JDialog{
                     CommonTokenStream tokenStream = new CommonTokenStream(lexer);
                     FormulaParser parser = new FormulaParser(tokenStream);
                     parser.setBuildParseTree(true);
+
+                    parser.addErrorListener(new OrangeErrorListener());
+
                     RuleContext tree = parser.formula();
 
                     System.out.println(tree.toStringTree(parser));
@@ -94,16 +123,18 @@ public class OrangeResultGUI extends JDialog{
                     OrangeFormulaVisitor visitor = new OrangeFormulaVisitor();
 
                     //Print the parseTree generated from the input
-//        Trees.inspect(tree, parser);
+                    //        Trees.inspect(tree, parser);
 
                     formula = visitor.visit(tree);
 
+
                 } catch (Exception e) {
-                    System.out.println("Invalid formula. Couldn't parse it.");
+                    System.out.println("\nIllegal formula. Couldn't parse it.");
                     result = "ERROR";
                     printProcess("Error");
-                    e.printStackTrace();
                 }
+
+                long toParsed = System.currentTimeMillis();
 
                 if (formula != null) {
 
@@ -132,13 +163,18 @@ public class OrangeResultGUI extends JDialog{
 
                     }
 
+                    long toOptimised = System.currentTimeMillis();
+
                     final OrangeFormulaSolver solver = new OrangeFormulaSolver(formula);
+                    solver.setId(id);
 
                     System.out.println("The optimised result cnf is: \n");
                     System.out.println(formula.toString() + "\n");
 
                     printProcess("Solving with Sat4j...");
                     result = solver.solve() ? "SAT" : "UNSAT";
+
+                    long toSolved = System.currentTimeMillis();
 
                     buttonStop.addActionListener(new ActionListener() {
                         @Override
@@ -163,7 +199,7 @@ public class OrangeResultGUI extends JDialog{
                                             }
                                             printProcess("DONE!");
                                         } else if (result.equals("ERROR")) {
-
+                                            System.out.println("Error, NO model.");
                                         }
                                     }
                                 }else {
@@ -177,6 +213,8 @@ public class OrangeResultGUI extends JDialog{
                         }
                     });
 
+                    printElapsedTime(start, toParsed, toOptimised, toSolved);
+
                     printProcess("Done!");
 
                 } else {
@@ -189,6 +227,15 @@ public class OrangeResultGUI extends JDialog{
         };
         work.start();
 
+    }
+
+    private void printElapsedTime(long start, long toParsed, long toOptimised, long toSolved) {
+        System.out.println("\n======================================");
+        System.out.println("- Time for parsing: " + (toParsed - start) + " milliseconds");
+        System.out.println("- Time for optimising: " + (toOptimised - toParsed) + " milliseconds");
+        System.out.println("- Time for solving: " + (toSolved - toOptimised) + " milliseconds");
+        System.out.println("+ Total elasped time: " + (toSolved - start) + " milliseconds");
+        System.out.println("======================================\n");
     }
 
     private void printProcess(String process) {

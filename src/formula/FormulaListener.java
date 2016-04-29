@@ -1,4 +1,5 @@
-package formula;// Generated from Formula.g4 by ANTLR 4.5.3
+// Generated from /Users/yin/IdeaProjects/ILSFirstProject/src/formula/Formula.g4 by ANTLR 4.5.1
+package formula;
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 
 /**
@@ -77,18 +78,6 @@ public interface FormulaListener extends ParseTreeListener {
 	 */
 	void exitDoIF(FormulaParser.DoIFContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code doPredicate}
-	 * labeled alternative in {@link FormulaParser#expression}.
-	 * @param ctx the parse tree
-	 */
-	void enterDoPredicate(FormulaParser.DoPredicateContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code doPredicate}
-	 * labeled alternative in {@link FormulaParser#expression}.
-	 * @param ctx the parse tree
-	 */
-	void exitDoPredicate(FormulaParser.DoPredicateContext ctx);
-	/**
 	 * Enter a parse tree produced by the {@code doExpandOr}
 	 * labeled alternative in {@link FormulaParser#expression}.
 	 * @param ctx the parse tree
@@ -100,6 +89,18 @@ public interface FormulaListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitDoExpandOr(FormulaParser.DoExpandOrContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code doPredicate}
+	 * labeled alternative in {@link FormulaParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterDoPredicate(FormulaParser.DoPredicateContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code doPredicate}
+	 * labeled alternative in {@link FormulaParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitDoPredicate(FormulaParser.DoPredicateContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code newFalseBoolean}
 	 * labeled alternative in {@link FormulaParser#expression}.

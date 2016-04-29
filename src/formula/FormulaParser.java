@@ -1,4 +1,5 @@
-package formula;// Generated from Formula.g4 by ANTLR 4.5.3
+// Generated from /Users/yin/IdeaProjects/ILSFirstProject/src/formula/Formula.g4 by ANTLR 4.5.1
+package formula;
 
 import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.atn.ATN;
@@ -14,7 +15,7 @@ import java.util.List;
 
 @SuppressWarnings({"all", "warnings", "unchecked", "unused", "cast"})
 public class FormulaParser extends Parser {
-	static { RuntimeMetaData.checkVersion("4.5.3", RuntimeMetaData.VERSION); }
+	static { RuntimeMetaData.checkVersion("4.5.1", RuntimeMetaData.VERSION); }
 
 	protected static final DFA[] _decisionToDFA;
 	protected static final PredictionContextCache _sharedContextCache =
@@ -269,29 +270,6 @@ public class FormulaParser extends Parser {
 			else return visitor.visitChildren(this);
 		}
 	}
-	public static class DoPredicateContext extends ExpressionContext {
-		public TerminalNode ID() { return getToken(FormulaParser.ID, 0); }
-		public List<TermContext> term() {
-			return getRuleContexts(TermContext.class);
-		}
-		public TermContext term(int i) {
-			return getRuleContext(TermContext.class,i);
-		}
-		public DoPredicateContext(ExpressionContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof FormulaListener ) ((FormulaListener)listener).enterDoPredicate(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof FormulaListener ) ((FormulaListener)listener).exitDoPredicate(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof FormulaVisitor ) return ((FormulaVisitor<? extends T>)visitor).visitDoPredicate(this);
-			else return visitor.visitChildren(this);
-		}
-	}
 	public static class DoExpandOrContext extends ExpressionContext {
 		public TerminalNode VAR() { return getToken(FormulaParser.VAR, 0); }
 		public ExpressionContext expression() {
@@ -315,6 +293,29 @@ public class FormulaParser extends Parser {
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof FormulaVisitor ) return ((FormulaVisitor<? extends T>)visitor).visitDoExpandOr(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class DoPredicateContext extends ExpressionContext {
+		public TerminalNode ID() { return getToken(FormulaParser.ID, 0); }
+		public List<TermContext> term() {
+			return getRuleContexts(TermContext.class);
+		}
+		public TermContext term(int i) {
+			return getRuleContext(TermContext.class,i);
+		}
+		public DoPredicateContext(ExpressionContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof FormulaListener ) ((FormulaListener)listener).enterDoPredicate(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof FormulaListener ) ((FormulaListener)listener).exitDoPredicate(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof FormulaVisitor ) return ((FormulaVisitor<? extends T>)visitor).visitDoPredicate(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -517,124 +518,121 @@ public class FormulaParser extends Parser {
 			enterOuterAlt(_localctx, 1);
 			{
 			setState(60);
-			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,4,_ctx) ) {
 			case 1:
 				{
-				_localctx = new DoPredicateContext(_localctx);
+				_localctx = new DoNotContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
 
 				setState(20);
-				match(ID);
+				match(T__3);
 				setState(21);
-				match(T__0);
+				expression(14);
+				}
+				break;
+			case 2:
+				{
+				_localctx = new DoExpandAndContext(_localctx);
+				_ctx = _localctx;
+				_prevctx = _localctx;
 				setState(22);
-				term();
+				match(T__12);
+				setState(23);
+				match(VAR);
+				setState(24);
+				match(T__13);
 				setState(27);
+				switch ( getInterpreter().adaptivePredict(_input,1,_ctx) ) {
+				case 1:
+					{
+					setState(25);
+					range_expr();
+					}
+					break;
+				case 2:
+					{
+					setState(26);
+					set_expr();
+					}
+					break;
+				}
+				setState(29);
+				expression(6);
+				}
+				break;
+			case 3:
+				{
+				_localctx = new DoExpandOrContext(_localctx);
+				_ctx = _localctx;
+				_prevctx = _localctx;
+				setState(31);
+				match(T__14);
+				setState(32);
+				match(VAR);
+				setState(33);
+				match(T__13);
+				setState(36);
+				switch ( getInterpreter().adaptivePredict(_input,2,_ctx) ) {
+				case 1:
+					{
+					setState(34);
+					range_expr();
+					}
+					break;
+				case 2:
+					{
+					setState(35);
+					set_expr();
+					}
+					break;
+				}
+				setState(38);
+				expression(5);
+				}
+				break;
+			case 4:
+				{
+				_localctx = new DoPredicateContext(_localctx);
+				_ctx = _localctx;
+				_prevctx = _localctx;
+				setState(40);
+				match(ID);
+				setState(41);
+				match(T__0);
+				setState(42);
+				term();
+				setState(47);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 				while (_la==T__1) {
 					{
 					{
-					setState(23);
+					setState(43);
 					match(T__1);
-					setState(24);
+					setState(44);
 					term();
 					}
 					}
-					setState(29);
+					setState(49);
 					_errHandler.sync(this);
 					_la = _input.LA(1);
 				}
-				setState(30);
+				setState(50);
 				match(T__2);
-				}
-				break;
-			case 2:
-				{
-				_localctx = new DoParenthesisContext(_localctx);
-				_ctx = _localctx;
-				_prevctx = _localctx;
-				setState(32);
-				match(T__0);
-				setState(33);
-				expression(0);
-				setState(34);
-				match(T__2);
-				}
-				break;
-			case 3:
-				{
-				_localctx = new DoNotContext(_localctx);
-				_ctx = _localctx;
-				_prevctx = _localctx;
-				setState(36);
-				match(T__3);
-				setState(37);
-				expression(14);
-				}
-				break;
-			case 4:
-				{
-				_localctx = new DoExpandAndContext(_localctx);
-				_ctx = _localctx;
-				_prevctx = _localctx;
-				setState(38);
-				match(T__12);
-				setState(39);
-				match(VAR);
-				setState(40);
-				match(T__13);
-				setState(43);
-				_errHandler.sync(this);
-				switch ( getInterpreter().adaptivePredict(_input,2,_ctx) ) {
-				case 1:
-					{
-					setState(41);
-					range_expr();
-					}
-					break;
-				case 2:
-					{
-					setState(42);
-					set_expr();
-					}
-					break;
-				}
-				setState(45);
-				expression(6);
 				}
 				break;
 			case 5:
 				{
-				_localctx = new DoExpandOrContext(_localctx);
+				_localctx = new DoParenthesisContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
-				setState(47);
-				match(T__14);
-				setState(48);
-				match(VAR);
-				setState(49);
-				match(T__13);
 				setState(52);
-				_errHandler.sync(this);
-				switch ( getInterpreter().adaptivePredict(_input,3,_ctx) ) {
-				case 1:
-					{
-					setState(50);
-					range_expr();
-					}
-					break;
-				case 2:
-					{
-					setState(51);
-					set_expr();
-					}
-					break;
-				}
+				match(T__0);
+				setState(53);
+				expression(0);
 				setState(54);
-				expression(5);
+				match(T__2);
 				}
 				break;
 			case 6:
@@ -684,7 +682,6 @@ public class FormulaParser extends Parser {
 					_prevctx = _localctx;
 					{
 					setState(86);
-					_errHandler.sync(this);
 					switch ( getInterpreter().adaptivePredict(_input,5,_ctx) ) {
 					case 1:
 						{
@@ -961,17 +958,28 @@ public class FormulaParser extends Parser {
 			{
 			setState(104);
 			switch (_input.LA(1)) {
+			case T__15:
+				{
+				_localctx = new UnaryMinusExpressionContext(_localctx);
+				_ctx = _localctx;
+				_prevctx = _localctx;
+
+				setState(92);
+				match(T__15);
+				setState(93);
+				int_expr(5);
+				}
+				break;
 			case T__0:
 				{
 				_localctx = new ParenthesizedIntExpressionContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
-
-				setState(92);
-				match(T__0);
-				setState(93);
-				int_expr(0);
 				setState(94);
+				match(T__0);
+				setState(95);
+				int_expr(0);
+				setState(96);
 				match(T__2);
 				}
 				break;
@@ -980,23 +988,12 @@ public class FormulaParser extends Parser {
 				_localctx = new AbsValueExpressionContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
-				setState(96);
-				match(T__10);
-				setState(97);
-				int_expr(0);
 				setState(98);
 				match(T__10);
-				}
-				break;
-			case T__15:
-				{
-				_localctx = new UnaryMinusExpressionContext(_localctx);
-				_ctx = _localctx;
-				_prevctx = _localctx;
+				setState(99);
+				int_expr(0);
 				setState(100);
-				match(T__15);
-				setState(101);
-				int_expr(5);
+				match(T__10);
 				}
 				break;
 			case VAR:
@@ -1030,7 +1027,6 @@ public class FormulaParser extends Parser {
 					_prevctx = _localctx;
 					{
 					setState(112);
-					_errHandler.sync(this);
 					switch ( getInterpreter().adaptivePredict(_input,8,_ctx) ) {
 					case 1:
 						{
@@ -1158,7 +1154,6 @@ public class FormulaParser extends Parser {
 		enterRule(_localctx, 6, RULE_term);
 		try {
 			setState(120);
-			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,10,_ctx) ) {
 			case 1:
 				_localctx = new NewTermIDContext(_localctx);
@@ -1363,43 +1358,43 @@ public class FormulaParser extends Parser {
 	public static final String _serializedATN =
 		"\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3 \u008f\4\2\t\2\4"+
 		"\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\3\2\6\2\20\n\2\r\2\16\2\21\3\2"+
-		"\3\2\3\3\3\3\3\3\3\3\3\3\3\3\7\3\34\n\3\f\3\16\3\37\13\3\3\3\3\3\3\3\3"+
-		"\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\5\3.\n\3\3\3\3\3\3\3\3\3\3\3\3"+
-		"\3\3\3\5\3\67\n\3\3\3\3\3\3\3\3\3\3\3\3\3\5\3?\n\3\3\3\3\3\3\3\3\3\3\3"+
+		"\3\2\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\5\3\36\n\3\3\3\3\3\3\3\3\3\3\3\3"+
+		"\3\3\3\5\3\'\n\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\7\3\60\n\3\f\3\16\3\63\13"+
+		"\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\5\3?\n\3\3\3\3\3\3\3\3\3\3"+
 		"\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3"+
-		"\3\3\3\7\3Y\n\3\f\3\16\3\\\13\3\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3"+
-		"\4\3\4\3\4\3\4\5\4k\n\4\3\4\3\4\3\4\3\4\3\4\3\4\7\4s\n\4\f\4\16\4v\13"+
+		"\3\3\3\3\7\3Y\n\3\f\3\16\3\\\13\3\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4"+
+		"\3\4\3\4\3\4\3\4\5\4k\n\4\3\4\3\4\3\4\3\4\3\4\3\4\7\4s\n\4\f\4\16\4v\13"+
 		"\4\3\5\3\5\3\5\5\5{\n\5\3\6\3\6\3\6\3\6\3\6\3\6\3\6\3\7\3\7\3\7\3\7\7"+
 		"\7\u0088\n\7\f\7\16\7\u008b\13\7\3\7\3\7\3\7\2\4\4\6\b\2\4\6\b\n\f\2\4"+
 		"\3\2\23\25\4\2\22\22\26\26\u00a4\2\17\3\2\2\2\4>\3\2\2\2\6j\3\2\2\2\b"+
 		"z\3\2\2\2\n|\3\2\2\2\f\u0083\3\2\2\2\16\20\5\4\3\2\17\16\3\2\2\2\20\21"+
 		"\3\2\2\2\21\17\3\2\2\2\21\22\3\2\2\2\22\23\3\2\2\2\23\24\7\2\2\3\24\3"+
-		"\3\2\2\2\25\26\b\3\1\2\26\27\7\34\2\2\27\30\7\3\2\2\30\35\5\b\5\2\31\32"+
-		"\7\4\2\2\32\34\5\b\5\2\33\31\3\2\2\2\34\37\3\2\2\2\35\33\3\2\2\2\35\36"+
-		"\3\2\2\2\36 \3\2\2\2\37\35\3\2\2\2 !\7\5\2\2!?\3\2\2\2\"#\7\3\2\2#$\5"+
-		"\4\3\2$%\7\5\2\2%?\3\2\2\2&\'\7\6\2\2\'?\5\4\3\20()\7\17\2\2)*\7\35\2"+
-		"\2*-\7\20\2\2+.\5\n\6\2,.\5\f\7\2-+\3\2\2\2-,\3\2\2\2./\3\2\2\2/\60\5"+
-		"\4\3\b\60?\3\2\2\2\61\62\7\21\2\2\62\63\7\35\2\2\63\66\7\20\2\2\64\67"+
-		"\5\n\6\2\65\67\5\f\7\2\66\64\3\2\2\2\66\65\3\2\2\2\678\3\2\2\289\5\4\3"+
-		"\79?\3\2\2\2:?\7\32\2\2;?\7\33\2\2<?\7\35\2\2=?\7\34\2\2>\25\3\2\2\2>"+
-		"\"\3\2\2\2>&\3\2\2\2>(\3\2\2\2>\61\3\2\2\2>:\3\2\2\2>;\3\2\2\2><\3\2\2"+
-		"\2>=\3\2\2\2?Z\3\2\2\2@A\f\17\2\2AB\7\7\2\2BY\5\4\3\20CD\f\16\2\2DE\7"+
-		"\b\2\2EY\5\4\3\17FG\f\r\2\2GH\7\t\2\2HY\5\4\3\16IJ\f\f\2\2JK\7\n\2\2K"+
-		"L\5\4\3\2LM\7\13\2\2MN\5\4\3\rNY\3\2\2\2OP\f\13\2\2PQ\7\f\2\2QY\5\4\3"+
+		"\3\2\2\2\25\26\b\3\1\2\26\27\7\6\2\2\27?\5\4\3\20\30\31\7\17\2\2\31\32"+
+		"\7\35\2\2\32\35\7\20\2\2\33\36\5\n\6\2\34\36\5\f\7\2\35\33\3\2\2\2\35"+
+		"\34\3\2\2\2\36\37\3\2\2\2\37 \5\4\3\b ?\3\2\2\2!\"\7\21\2\2\"#\7\35\2"+
+		"\2#&\7\20\2\2$\'\5\n\6\2%\'\5\f\7\2&$\3\2\2\2&%\3\2\2\2\'(\3\2\2\2()\5"+
+		"\4\3\7)?\3\2\2\2*+\7\34\2\2+,\7\3\2\2,\61\5\b\5\2-.\7\4\2\2.\60\5\b\5"+
+		"\2/-\3\2\2\2\60\63\3\2\2\2\61/\3\2\2\2\61\62\3\2\2\2\62\64\3\2\2\2\63"+
+		"\61\3\2\2\2\64\65\7\5\2\2\65?\3\2\2\2\66\67\7\3\2\2\678\5\4\3\289\7\5"+
+		"\2\29?\3\2\2\2:?\7\32\2\2;?\7\33\2\2<?\7\35\2\2=?\7\34\2\2>\25\3\2\2\2"+
+		">\30\3\2\2\2>!\3\2\2\2>*\3\2\2\2>\66\3\2\2\2>:\3\2\2\2>;\3\2\2\2><\3\2"+
+		"\2\2>=\3\2\2\2?Z\3\2\2\2@A\f\17\2\2AB\7\7\2\2BY\5\4\3\20CD\f\16\2\2DE"+
+		"\7\b\2\2EY\5\4\3\17FG\f\r\2\2GH\7\t\2\2HY\5\4\3\16IJ\f\f\2\2JK\7\n\2\2"+
+		"KL\5\4\3\2LM\7\13\2\2MN\5\4\3\rNY\3\2\2\2OP\f\13\2\2PQ\7\f\2\2QY\5\4\3"+
 		"\fRS\f\n\2\2ST\7\r\2\2TY\5\4\3\13UV\f\t\2\2VW\7\16\2\2WY\5\4\3\nX@\3\2"+
 		"\2\2XC\3\2\2\2XF\3\2\2\2XI\3\2\2\2XO\3\2\2\2XR\3\2\2\2XU\3\2\2\2Y\\\3"+
-		"\2\2\2ZX\3\2\2\2Z[\3\2\2\2[\5\3\2\2\2\\Z\3\2\2\2]^\b\4\1\2^_\7\3\2\2_"+
-		"`\5\6\4\2`a\7\5\2\2ak\3\2\2\2bc\7\r\2\2cd\5\6\4\2de\7\r\2\2ek\3\2\2\2"+
-		"fg\7\22\2\2gk\5\6\4\7hk\7\35\2\2ik\7\36\2\2j]\3\2\2\2jb\3\2\2\2jf\3\2"+
-		"\2\2jh\3\2\2\2ji\3\2\2\2kt\3\2\2\2lm\f\6\2\2mn\t\2\2\2ns\5\6\4\7op\f\5"+
-		"\2\2pq\t\3\2\2qs\5\6\4\6rl\3\2\2\2ro\3\2\2\2sv\3\2\2\2tr\3\2\2\2tu\3\2"+
-		"\2\2u\7\3\2\2\2vt\3\2\2\2w{\7\34\2\2x{\7\35\2\2y{\5\6\4\2zw\3\2\2\2zx"+
-		"\3\2\2\2zy\3\2\2\2{\t\3\2\2\2|}\7\27\2\2}~\5\6\4\2~\177\7\30\2\2\177\u0080"+
+		"\2\2\2ZX\3\2\2\2Z[\3\2\2\2[\5\3\2\2\2\\Z\3\2\2\2]^\b\4\1\2^_\7\22\2\2"+
+		"_k\5\6\4\7`a\7\3\2\2ab\5\6\4\2bc\7\5\2\2ck\3\2\2\2de\7\r\2\2ef\5\6\4\2"+
+		"fg\7\r\2\2gk\3\2\2\2hk\7\35\2\2ik\7\36\2\2j]\3\2\2\2j`\3\2\2\2jd\3\2\2"+
+		"\2jh\3\2\2\2ji\3\2\2\2kt\3\2\2\2lm\f\6\2\2mn\t\2\2\2ns\5\6\4\7op\f\5\2"+
+		"\2pq\t\3\2\2qs\5\6\4\6rl\3\2\2\2ro\3\2\2\2sv\3\2\2\2tr\3\2\2\2tu\3\2\2"+
+		"\2u\7\3\2\2\2vt\3\2\2\2w{\7\34\2\2x{\7\35\2\2y{\5\6\4\2zw\3\2\2\2zx\3"+
+		"\2\2\2zy\3\2\2\2{\t\3\2\2\2|}\7\27\2\2}~\5\6\4\2~\177\7\30\2\2\177\u0080"+
 		"\5\6\4\2\u0080\u0081\3\2\2\2\u0081\u0082\7\31\2\2\u0082\13\3\2\2\2\u0083"+
 		"\u0084\7\27\2\2\u0084\u0089\5\b\5\2\u0085\u0086\7\4\2\2\u0086\u0088\5"+
 		"\b\5\2\u0087\u0085\3\2\2\2\u0088\u008b\3\2\2\2\u0089\u0087\3\2\2\2\u0089"+
 		"\u008a\3\2\2\2\u008a\u008c\3\2\2\2\u008b\u0089\3\2\2\2\u008c\u008d\7\31"+
-		"\2\2\u008d\r\3\2\2\2\16\21\35-\66>XZjrtz\u0089";
+		"\2\2\u008d\r\3\2\2\2\16\21\35&\61>XZjrtz\u0089";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

@@ -59,6 +59,5 @@ fragment DIGIT    : '0' .. '9';
 fragment UPPER    : 'A' .. 'Z';
 fragment LOWER    : 'a' .. 'z';
 fragment LETTER   : LOWER | UPPER;
-fragment WORD     : LETTER | '_' | '$' | '#' | '.';
+fragment WORD     : LETTER | '_' | '$' | '#';
 fragment ALPHANUM : WORD | DIGIT;
-

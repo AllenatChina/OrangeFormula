@@ -1,4 +1,5 @@
-package formula;// Generated from Formula.g4 by ANTLR 4.5.3
+// Generated from /Users/yin/IdeaProjects/ILSFirstProject/src/formula/Formula.g4 by ANTLR 4.5.1
+package formula;
 
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ErrorNode;
@@ -87,18 +88,6 @@ public class FormulaBaseListener implements FormulaListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterDoPredicate(FormulaParser.DoPredicateContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitDoPredicate(FormulaParser.DoPredicateContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void enterDoExpandOr(FormulaParser.DoExpandOrContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -106,6 +95,18 @@ public class FormulaBaseListener implements FormulaListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitDoExpandOr(FormulaParser.DoExpandOrContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterDoPredicate(FormulaParser.DoPredicateContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitDoPredicate(FormulaParser.DoPredicateContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

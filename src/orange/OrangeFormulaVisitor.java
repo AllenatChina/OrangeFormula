@@ -76,7 +76,7 @@ public class OrangeFormulaVisitor extends FormulaBaseVisitor<OrangeFormula> {
     public OrangeFormula visitNewVariable(FormulaParser.NewVariableContext ctx) {
         String var = ctx.VAR().getText();
         if (boundMap == null || !boundMap.containsKey(var)) {
-            return new OrangeFormula(ctx.VAR().getText());
+            return new OrangeFormula("False");
         } else {
             return new OrangeFormula(boundMap.get(var));
         }

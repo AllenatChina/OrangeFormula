@@ -30,6 +30,7 @@
                 </constraints>
                 <properties>
                   <text value="GO!"/>
+                  <toolTipText value="Click me now!"/>
                 </properties>
               </component>
               <component id="5723f" class="javax.swing.JButton" binding="buttonCancel">
@@ -38,6 +39,7 @@
                 </constraints>
                 <properties>
                   <text value="CLEAR"/>
+                  <toolTipText value="Clear the input panel"/>
                 </properties>
               </component>
             </children>
@@ -66,6 +68,7 @@
             </constraints>
             <properties>
               <text value="Pure literals"/>
+              <toolTipText value="Use pure literals to reduce the size of formula"/>
             </properties>
           </component>
         </children>

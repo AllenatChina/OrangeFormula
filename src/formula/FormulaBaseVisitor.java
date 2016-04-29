@@ -1,4 +1,5 @@
-package formula;// Generated from Formula.g4 by ANTLR 4.5.3
+// Generated from /Users/yin/IdeaProjects/ILSFirstProject/src/formula/Formula.g4 by ANTLR 4.5.1
+package formula;
 import org.antlr.v4.runtime.tree.AbstractParseTreeVisitor;
 
 /**
@@ -58,14 +59,14 @@ public class FormulaBaseVisitor<T> extends AbstractParseTreeVisitor<T> implement
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitDoPredicate(FormulaParser.DoPredicateContext ctx) { return visitChildren(ctx); }
+	@Override public T visitDoExpandOr(FormulaParser.DoExpandOrContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitDoExpandOr(FormulaParser.DoExpandOrContext ctx) { return visitChildren(ctx); }
+	@Override public T visitDoPredicate(FormulaParser.DoPredicateContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *

@@ -43,6 +43,7 @@
                 </constraints>
                 <properties>
                   <text value="MORE MODELS"/>
+                  <toolTipText value="Print more models if there are any"/>
                 </properties>
               </component>
             </children>

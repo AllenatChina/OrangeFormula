@@ -1,4 +1,5 @@
-package formula;// Generated from Formula.g4 by ANTLR 4.5.3
+// Generated from /Users/yin/IdeaProjects/ILSFirstProject/src/formula/Formula.g4 by ANTLR 4.5.1
+package formula;
 import org.antlr.v4.runtime.tree.ParseTreeVisitor;
 
 /**
@@ -51,19 +52,19 @@ public interface FormulaVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitDoIF(FormulaParser.DoIFContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code doPredicate}
-	 * labeled alternative in {@link FormulaParser#expression}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitDoPredicate(FormulaParser.DoPredicateContext ctx);
-	/**
 	 * Visit a parse tree produced by the {@code doExpandOr}
 	 * labeled alternative in {@link FormulaParser#expression}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitDoExpandOr(FormulaParser.DoExpandOrContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code doPredicate}
+	 * labeled alternative in {@link FormulaParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitDoPredicate(FormulaParser.DoPredicateContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code newFalseBoolean}
 	 * labeled alternative in {@link FormulaParser#expression}.

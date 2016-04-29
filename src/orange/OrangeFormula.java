@@ -142,6 +142,7 @@ public class OrangeFormula {
             buffer.append(clauses.get(i).toString() + (i == clauses.size() - 1 ? "" : ", "));
         }
         buffer.append(" >");
+        buffer.append(" \n$ " + clauses.size() + " clauses in total");
 
         return buffer.toString();
     }
