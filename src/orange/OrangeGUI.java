@@ -1,12 +1,12 @@
 package orange;
 
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.util.ArrayList;
-import java.util.List;
 
 public class OrangeGUI extends JDialog {
     private JPanel contentPane;
@@ -15,10 +15,11 @@ public class OrangeGUI extends JDialog {
     private JTextArea textArea1;
     private JCheckBox subsumptionCheckBox;
     private JCheckBox unitPropagationCheckBox;
-    private JTextArea pastResults;
     private JCheckBox pureLiteralsCheckBox;
+    private JList list;
+    private JScrollPane listSP;
 
-    private List<String> pastInputList;
+    DefaultListModel model;
 
     public OrangeGUI() {
         setTitle("OrangeGUI");
@@ -38,7 +39,7 @@ public class OrangeGUI extends JDialog {
             }
         });
 
-// call onCancel() when cross is clicked
+        // call onCancel() when cross is clicked
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
@@ -46,7 +47,21 @@ public class OrangeGUI extends JDialog {
             }
         });
 
-        pastInputList = new ArrayList<String>();
+        model = new DefaultListModel();
+        list.setModel(model);
+        list.addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                if (!e.getValueIsAdjusting()) {
+                    if (list.getSelectedIndex() >= 0) {
+                        textArea1.setText(((ResultCell) model.get(list.getSelectedIndex())).input);
+                        list.ensureIndexIsVisible(list.getSelectedIndex());
+                    }
+                }
+            }
+        });
+
+        listSP.setVisible(false);
 
     }
 
@@ -60,8 +75,9 @@ public class OrangeGUI extends JDialog {
         resultGUI.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosed(WindowEvent e) {
-                String result = resultGUI.result;
-                pastResults.setText(result + ": " + input + "\n" + pastResults.getText());
+                listSP.setVisible(true);
+                model.addElement(ResultCell.newCell(input, resultGUI.result));
+                list.setSelectedIndex(model.size() - 1);
                 pack();
             }
         });
@@ -72,8 +88,29 @@ public class OrangeGUI extends JDialog {
 
     }
 
+    private static class ResultCell {
+
+        String input;
+        String result;
+
+        private static ResultCell newCell(String input, String result) {
+            ResultCell cell = new ResultCell();
+            cell.input = input;
+            cell.result = result;
+            return cell;
+        }
+
+        @Override
+        public String toString() {
+            String ret = result + ": \n" + input;
+            return ret.length() > 50 ? ret.substring(0, 50) + "..." : ret;
+        }
+    }
+
+
     private void onCancel() {
         textArea1.setText("");
+        list.clearSelection();
     }
 
     public static void main(String[] args) {

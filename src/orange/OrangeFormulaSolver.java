@@ -77,9 +77,12 @@ public class OrangeFormulaSolver {
         return false;
     }
 
-    private void writeDIMACS() throws IOException {
+    private String filename = "";
 
-        FileWriter fileWriter = new FileWriter("dimacs" + (id == null ? "" : ("_" + id)) + ".cnf");
+    private void writeDIMACS() throws IOException {
+        filename = "dimacs" + (id == null ? "" : ("_" + id)) + ".cnf";
+
+        FileWriter fileWriter = new FileWriter(filename);
 
         BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
 
@@ -110,7 +113,7 @@ public class OrangeFormulaSolver {
     private boolean solveDIMACS() throws IOException, ParseFormatException, ContradictionException, TimeoutException {
 
         LecteurDimacs reader = new LecteurDimacs(SolverFactory.newDefault());
-        ISolver solver = (ISolver) reader.parseInstance("dimacs.cnf");
+        ISolver solver = (ISolver) reader.parseInstance(filename);
         mi = new ModelIterator(solver);
 
         if (mi.isSatisfiable()) {

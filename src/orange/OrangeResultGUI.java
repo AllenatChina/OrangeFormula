@@ -43,17 +43,12 @@ public class OrangeResultGUI extends JDialog{
             }
         });
 
-        PrintStream ps = System.out;
-        System.setOut(new PrintStream(new StreamCapturer(ps)));
+        System.setOut(new PrintStream(new StreamCapturer()));
     }
 
     private void onOK() {
-        if (logWriter != null) {
-            try {
-                logWriter.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        if (result.isEmpty()) {
+            result = "STOPPED";
         }
         dispose();
     }
@@ -66,6 +61,7 @@ public class OrangeResultGUI extends JDialog{
                 try {
                     logWriter.write(text);
                     logWriter.newLine();
+                    logWriter.flush();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -94,7 +90,7 @@ public class OrangeResultGUI extends JDialog{
             public void run() {
 
                 Calendar calendar = Calendar.getInstance();
-                String id = new SimpleDateFormat("yyyyMMdd_HH:mm:ss").format(calendar.getTime());
+                String id = new SimpleDateFormat("yyyyMMdd_HHmmss").format(calendar.getTime());
                 try {
                     logWriter = new BufferedWriter(new FileWriter("result_" + id + ".txt"));
                 } catch (IOException e) {
@@ -195,7 +191,7 @@ public class OrangeResultGUI extends JDialog{
                                             try {
                                                 solver.printOtherSolutions();
                                             } catch (TimeoutException e1) {
-                                                System.out.println("$ The solver is unable to finish solving in two minutes. TIMEOUT!");
+                                                System.out.println("$ The solver is unable to finish solving in a short time. TIMEOUT!");
                                             }
                                             printProcess("DONE!");
                                         } else if (result.equals("ERROR")) {
@@ -245,11 +241,9 @@ public class OrangeResultGUI extends JDialog{
     public class StreamCapturer extends OutputStream {
 
         private StringBuilder buffer;
-        private PrintStream old;
 
-        public StreamCapturer(PrintStream old) {
+        public StreamCapturer() {
             buffer = new StringBuilder(128);
-            this.old = old;
         }
 
         @Override
@@ -261,7 +255,6 @@ public class OrangeResultGUI extends JDialog{
                 appendText(buffer.toString());
                 buffer.delete(0, buffer.length());
             }
-            old.print(c);
         }
     }
 

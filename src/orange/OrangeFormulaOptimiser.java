@@ -9,7 +9,6 @@ public class OrangeFormulaOptimiser {
 
     public static OrangeFormula optimise(OrangeFormula formula) {
 
-
         while (subsumption(formula)
                 || unitPropagation(formula)
                 || pureLiterals(formula)) {
@@ -27,11 +26,11 @@ public class OrangeFormulaOptimiser {
             public int compare(OrangeClause o1, OrangeClause o2) {
                 if (o1.containsClause(o2)) {
                     return 1;
-                }
-                if (o2.containsClause(o1)) {
+                } else if (o2.containsClause(o1)) {
                     return -1;
+                } else {
+                    return o1.getLiterals().size() - o2.getLiterals().size();
                 }
-                return o1.getLiterals().size() - o2.getLiterals().size();
             }
         });
 
